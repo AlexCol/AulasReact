@@ -1,0 +1,8 @@
+para criar
+npx create-react-app 11_react_com_ts --template typescript
+
+ou
+
+npm create vite@latest
+ou
+npm init vite
