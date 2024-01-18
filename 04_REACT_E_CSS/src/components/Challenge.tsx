@@ -1,4 +1,5 @@
 import styles from './Challenge.module.css'
+import ChallengeCar from './ChallengeCar'
 
 interface Car {
     brand: string, 
@@ -15,15 +16,12 @@ const Challenge = () => {
 
     return (
         <div className={styles.chal}>
-            {
-                carros.map((car, index) => (
-                    <div key={index}>
-                        <h1>Brand: {car.brand}</h1>
-                        <h2 style={{color: car.color}}>Color: {car.color}</h2>
-                        <h3>KM: {car.km}</h3>
-                    </div>
-                ))
-            }
+            <h1>ShowRoom de Carros</h1>
+            <div className={styles.car_container}>
+                {carros.map((car, index) => (
+                    <ChallengeCar key={index} car={car}/>
+                ))}
+            </div>
         </div>
     )
 }
