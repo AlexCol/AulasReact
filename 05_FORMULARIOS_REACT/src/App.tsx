@@ -6,7 +6,7 @@ function App() {
     <div>
       <h2>Forms</h2>
       <MyForm _name='Alex' _email='eu@com.br'/>
-      <MyForm _name=''/>
+      <MyForm _name='' _role = 'admin'/>
     </div>
   )
 }
