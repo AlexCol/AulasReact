@@ -6,3 +6,13 @@ ou
 npm create vite@latest
 ou
 npm init vite
+
+
+
+
+----para criação do json server (feito na sessão 07)
+npm i json-server
+--depois criar uma pasta 'data' onde serão inseridos dados
+--então criar um script em package.json para rodar a api
+"server": "json-server --watch data/db.json --port 3005"
+--a porta fica a critério(sem informar ela, o padrão é a 3000)
