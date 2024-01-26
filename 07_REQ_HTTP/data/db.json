@@ -1,29 +1,14 @@
 {
   "products": [
     {
-      "id": 1,
+      "id": "-Infinity",
       "name": "Camisa",
-      "price": 59.9
+      "price": 59.99
     },
     {
-      "id": 2,
-      "name": "Calça vermelha",
-      "price": 90
-    },
-    {
-      "id": 3,
-      "name": "Boné aba reta",
-      "price": 29.9
-    },
-    {
-      "id": 4,
-      "name": "Jeans",
-      "price": 99.99
-    },
-    {
-      "id": 5,
-      "name": "Regata",
-      "price": 50
+      "id": "NaN",
+      "name": "Vela - Lavanda",
+      "price": 79.99
     }
   ]
 }
