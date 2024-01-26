@@ -1,0 +1,19 @@
+{
+    "products": [
+      {
+        "id": "1",
+        "name": "Camisa",
+        "price": 59.99
+      },
+      {
+        "id": "2",
+        "name": "Vela - Lavanda",
+        "price": 79.99
+      },
+      {
+        "id": "3",
+        "name": "Aromatizador - Lavanda",
+        "price": 79.99
+      }
+    ]
+  }

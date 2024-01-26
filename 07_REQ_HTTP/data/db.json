@@ -1,12 +1,12 @@
 {
   "products": [
     {
-      "id": "-Infinity",
+      "id": "1",
       "name": "Camisa",
       "price": 59.99
     },
     {
-      "id": "NaN",
+      "id": "2",
       "name": "Vela - Lavanda",
       "price": 79.99
     }

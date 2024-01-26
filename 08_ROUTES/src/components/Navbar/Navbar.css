@@ -1,0 +1,22 @@
+nav {
+    display: flex;
+    justify-content: center;
+}
+
+nav a {
+    margin: 0 10px;
+    padding: 5px;
+    text-decoration: none;
+    color: blueviolet;
+    transition: 0.4s;
+}
+
+nav a:hover {
+    color: cadetblue;
+    text-decoration: underline;
+}
+
+.active {
+    background-color: black;
+    color: white;
+}

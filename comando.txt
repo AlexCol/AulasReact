@@ -16,3 +16,10 @@ npm i json-server
 --então criar um script em package.json para rodar a api
 "server": "json-server --watch data/db.json --port 3005"
 --a porta fica a critério(sem informar ela, o padrão é a 3000)
+
+---pra uso do axios
+npm install axios
+
+
+---pra criação de rotas
+npm install react-router-dom
