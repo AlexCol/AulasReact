@@ -5,27 +5,38 @@ import api from "../Axios";
 import IProduct from "../Interface/IProduct";
 
   //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-const useCustomFetch = () => {
+const useCustomFetch = (searchInfo?: string) => {
     const [mainData, setMainData] = useState<IProduct[]>([]);
     const [paramData, setParamData] = useState<IProduct|null>(null);
     const [method, setMethod] = useState<string>('');
     const [callFech, setCallFect] = useState<boolean>(true);
-
-    useEffect(() => {
-      console.log("inicio fetch");
+    console.log(searchInfo);
+    
+    //! esse troço tah bem zuado, mas serve pra ter uma rotina só pra processar todo tipo de pesquisa
+    useEffect(() => {      
       if (!callFech) return;
-      setLoading(true);
-      
+      setLoading(true);      
       const fetchData = async () => {
-        const res = await api.get<IProduct[]>("products");
+        const searchData = (
+          searchInfo ? //se tiver informaçaõ
+            searchInfo.includes("?") ?
+            searchInfo  //se tiver ? é query params, então a informação está pronta, só anexar a url
+            : "/"+searchInfo //senão, veio a Id, ai anexo a barra
+          : '' //se não tem nada, deixo em branco
+        );
+        const res = await api.get<IProduct[]>("products" + searchData);
         const data = (Array.isArray(res.data)) ? res.data : [res.data];
         setMainData(data);
         setLoading(false);
+        setCallFect(false);
       };
-
-      fetchData();
-      setCallFect(false);
+      fetchData();      
     }, [callFech]);
+
+    //! sem isso, quando chamado na busca, como o callFech só é mudado no 'executa', estava saindo na validaçaõ do useeffect acima e não buscava os dados
+    useEffect(() => {
+      setCallFect(true);
+    }, [searchInfo]);
 
     //+loading
     const [loading, setLoading] = useState<boolean>(false);
@@ -39,9 +50,8 @@ const useCustomFetch = () => {
     setMethod(_method);
   };
   useEffect(() => {
-    console.log("teste");
     const newRequest = async() => {
-      if (!paramData) return;      
+      if (!paramData) return;
       setLoading(true);
 
       if (method === "POST" && paramData.id === "0") {
@@ -62,7 +72,6 @@ const useCustomFetch = () => {
           }
           await api.post("products", product);        
         } catch(error: any) {
-          console.log(error.message);
           setError(error.message);
         }
       }
@@ -70,14 +79,13 @@ const useCustomFetch = () => {
       if (method === "DELETE" && paramData.id !== "0") {
         await api.delete(`products/${paramData.id}`);
       }
-      
       setParamData(null);
       setMethod('');
       setCallFect(true);
       setLoading(false);  
     }
     newRequest();
-  }, [paramData, method]);
+  }, [paramData]);
   return { mainData, executa, loading, error };
 }
 

@@ -1,26 +1,25 @@
-import './Products.css'
+import { Link, useSearchParams } from "react-router-dom"
 import useCustomFetch from "../../Hooks/useCustomFetch";
-import { Link } from 'react-router-dom';
 
-const Products = () => {
-    const {mainData: itens, loading, error} = useCustomFetch();
-
+const Search = () => {
+    const [searchParams] = useSearchParams();
+    const {mainData: products, loading, error} = useCustomFetch("?"+searchParams.toString());
     return (
         <div>
-            <h1>Products</h1>
+            <h1>Resultados disponíveis.</h1>
             {error && <p>{error}</p>}
             {loading && <p>Carregando dados.</p>}
             <ul className="products">
-                {itens && itens.map(item => (
+                {products && products.map(item => (
                     <li key={item.id}>
                         <h2>{item.name}</h2>
                         <p>R$ {item.price}</p>
                         <Link to={`/products/${item.id}`}>Detalhes</Link>
                     </li>
                 ))}
-            </ul>
+            </ul>            
         </div>
-  )
+    )
 }
 
-export default Products
+export default Search
