@@ -1,5 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './Register.module.css';
+import { IUser } from '../../Interfaces/IUser';
+import { useAuthentication } from '../../Hooks/useAuthentication';
 
 const Register = () => {
     const [displayName, setDisplayName] = useState<string>("");
@@ -7,12 +9,17 @@ const Register = () => {
     const [password, setPassword] = useState<string>("");
     const [confirmPassword, setConfirmPassword] = useState<string>("");
     const [error, setError] = useState<string>("");
+    const [created, setCreated] = useState<boolean>(false);
 
-    const handleSubmit = (e:React.FormEvent<HTMLFormElement>) => {
+created
+    const {createUser, error: authError, loading} = useAuthentication();
+
+    const handleSubmit = async (e:React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setError("");
+        setCreated(false);
 
-        const user = {
+        const user:IUser = {
             displayName,
             email,
             password
@@ -20,10 +27,24 @@ const Register = () => {
 
         if (password !== confirmPassword) {
             setError("As senhas precisam ser iguais.");
+            return;
         }
-
-        console.log(user);
+        const res = await createUser(user);
+        if(res) {
+            setCreated(true);
+            setDisplayName('');
+            setEmail('');
+            setPassword('');
+            setConfirmPassword(''); 
+        }
     }
+
+    useEffect(() => {        
+        if (authError.length > 0) {
+            setError(authError);
+            return;
+        }
+    }, [authError])
 
     return (
     <div className={styles.register}>
@@ -34,7 +55,7 @@ const Register = () => {
                 <span>Nome:</span>
                 <input
                     type="text"
-                    name='displayName'
+                    id='displayName'
                     value={displayName}
                     onChange={(e) => setDisplayName(e.target.value)}
                     required
@@ -45,8 +66,9 @@ const Register = () => {
                 <span>E-Mail:</span>
                 <input
                     type="email"
-                    name='email'
+                    id='email'
                     value={email}
+                    autoComplete='email'
                     onChange={(e) => setEmail(e.target.value)}
                     required
                     placeholder='E-Mail de usuário.'
@@ -56,7 +78,7 @@ const Register = () => {
                 <span>Senha:</span>
                 <input
                 type="password"
-                name='password'
+                id='password'
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
@@ -67,14 +89,18 @@ const Register = () => {
                 <span>Confirme sua senha:</span>
                 <input 
                     type="password"
-                    name='confirmPassword'
+                    id='confirmPassword'
+                    value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     required
                     placeholder='Confirme sua senha.'
                 />
             </label>
-            <button className="btn">Cadastrar</button>
+            {!loading && <button className="btn">Cadastrar</button>}
+            {loading && <button className="btn" disabled>Aguarde...</button>}
+
             {error && <p className='error'>{error}</p>}
+            {created && <p className='success'>Usuário Criado com Sucesso</p>}
         </form>
     </div>
   );

@@ -119,3 +119,11 @@ button:disabled:hover {
   padding: 5px;
   border-radius: 5px;
 }
+
+.container .success {
+  color: #075004;
+  background-color: #1efa0a;
+  border: 1p solid #0b8f37;
+  padding: 5px;
+  border-radius: 5px;
+}
