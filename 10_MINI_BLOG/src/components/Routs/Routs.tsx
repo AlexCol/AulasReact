@@ -4,6 +4,8 @@ import About from "../../pages/About/About"
 import NoContent from "../../pages/NoContent/NoContent"
 import Footer from "../Footer/Footer"
 import Navbar from "../Navbar/Navbar"
+import Loggin from "../../pages/Loggin/Loggin"
+import Register from "../../pages/Register/Register"
 
 const Routs = () => {
   return (
@@ -13,7 +15,10 @@ const Routs = () => {
             <Navbar />
             <Routes>
                 <Route path="/" element={<Home/>}/>
-                <Route path="/about" element={<About/>}/>                
+                <Route path="/about" element={<About/>}/>
+
+                <Route path="/loggin" element={<Loggin/>}/>
+                <Route path="/register" element={<Register/>}/>
                 //+No content
                 <Route path="*" element={<NoContent/>}/>
             </Routes>            

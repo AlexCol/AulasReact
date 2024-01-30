@@ -24,11 +24,14 @@
     border: 1px solid transparent;
     transition: 0.5s;
 }
+
 .links_list li a:hover {
-    border: 1px solid blueviolet;
+    background-color: blueviolet;
+    color: beige;
 }
 
 .active {
-    background-color: blueviolet;
+    background-color: purple !important;
+    text-decoration: underline;    
     color: beige !important;
 }

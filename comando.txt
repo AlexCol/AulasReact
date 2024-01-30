@@ -24,3 +24,11 @@ npm install axios
 
 ---pra criação de rotas
 npm install react-router-dom
+
+
+---para leitura de cookies
+npm install js-cookie
+npm install --save-dev @types/js-cookie
+
+npm install react-cookie
+npm install --save-dev @types/react-cookie
