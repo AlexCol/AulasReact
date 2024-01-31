@@ -11,7 +11,7 @@ const Register = () => {
     const [error, setError] = useState<string>("");
     const [created, setCreated] = useState<boolean>(false);
 
-created
+
     const {createUser, error: authError, loading} = useAuthentication();
 
     const handleSubmit = async (e:React.FormEvent<HTMLFormElement>) => {

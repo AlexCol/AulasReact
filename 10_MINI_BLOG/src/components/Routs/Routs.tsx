@@ -6,26 +6,38 @@ import Footer from "../Footer/Footer"
 import Navbar from "../Navbar/Navbar"
 import Loggin from "../../pages/Loggin/Loggin"
 import Register from "../../pages/Register/Register"
+import CreatePost from "../../pages/CreatePost/CreatePost"
+import Dashboard from "../../pages/Dashboard/Dashboard"
+import {RestrictedRoute} from "./RestrictedRoute"
 
 const Routs = () => {
+  //hack();  
   return (
     <>
         <BrowserRouter>
             <div className="container">
             <Navbar />
             <Routes>
+                {/* free routes */}
                 <Route path="/" element={<Home/>}/>
                 <Route path="/about" element={<About/>}/>
 
-                <Route path="/loggin" element={<Loggin/>}/>
-                <Route path="/register" element={<Register/>}/>
+                {/* all RestrictedRoute are by default bloqued, must specify if can be acceced while logged in ou loggedout*/}
+                {/* can only be acceced if logged out */}
+                <Route path="/loggin" element={<RestrictedRoute canAccessLoggedOut={true}><Loggin/></RestrictedRoute>}/>
+                <Route path="/register" element={<RestrictedRoute canAccessLoggedOut={true}><Register/></RestrictedRoute>}/>
+                
+                {/* can only be acceced if logged in */}
+                <Route path="/dashboard" element={<RestrictedRoute canAccessLoggeIn={true}><Dashboard/></RestrictedRoute>}/>
+                <Route path="/create/post" element={<RestrictedRoute canAccessLoggeIn={true}><CreatePost/></RestrictedRoute>}/>
                 //+No content
                 <Route path="*" element={<NoContent/>}/>
-            </Routes>            
+            </Routes>
+          
             </div>
             <Footer />
         </BrowserRouter>
     </>
   )
 }
-export default Routs
+export default Routs;
