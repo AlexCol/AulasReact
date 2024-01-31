@@ -10,12 +10,18 @@ export function AuthProvider(
     const {logout} = useAuthentication();
     
     //+realizar ultima ação antes de fechar, realizar o logout papra limpeza de tokens
+  // Tipando o 'event' como BeforeUnloadEvent
     useEffect(() => {
-        window.onbeforeunload = function() {
+        const handleTabClose = (event: Event) => {
+            event.preventDefault();
             logout();
-            return;
-          }
-      }, []);
+        };
+        window.addEventListener("unload", handleTabClose);
+
+        return () => {
+        window.removeEventListener("unload", handleTabClose);
+        }
+    }, []);
     
     return (
         <AuthContext.Provider value={value}>

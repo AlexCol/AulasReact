@@ -127,3 +127,20 @@ button:disabled:hover {
   padding: 5px;
   border-radius: 5px;
 }
+
+.quill {
+  box-sizing: border-box;
+  border: none;
+  padding: .8em 0;
+  background-color: transparent;  
+  height: 200px;
+}
+
+.quill::placeholder {
+  font-family: "Montserrat", sans-serif;
+  color: #AAA;
+}
+
+.quill:focus {
+  outline: none;
+}
