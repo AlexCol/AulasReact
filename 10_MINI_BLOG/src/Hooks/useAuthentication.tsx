@@ -61,7 +61,6 @@ export const useAuthentication = () => {
 
     const login = async (data:IUser) => {
         checkIfIsCancelled();
-        console.log(cancelled);
         setError('');
         setLoading(true);
 

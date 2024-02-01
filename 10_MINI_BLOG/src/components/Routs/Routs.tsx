@@ -29,7 +29,7 @@ const Routs = () => {
                 
                 {/* can only be acceced if logged in */}
                 <Route path="/dashboard" element={<RestrictedRoute canAccessLoggeIn={true}><Dashboard/></RestrictedRoute>}/>
-                <Route path="/create/post" element={<RestrictedRoute canAccessLoggeIn={true}><CreatePost/></RestrictedRoute>}/>
+                <Route path="/post/create" element={<RestrictedRoute canAccessLoggeIn={true}><CreatePost/></RestrictedRoute>}/>
                 //+No content
                 <Route path="*" element={<NoContent/>}/>
             </Routes>
