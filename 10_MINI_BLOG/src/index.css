@@ -115,7 +115,7 @@ button:disabled:hover {
 .container .error {
   color: #721C24;
   background-color: #F8D7DA;
-  border: 1p solid #F5C6CB;
+  border: 1px solid #F5C6CB;
   padding: 5px;
   border-radius: 5px;
 }
@@ -123,24 +123,29 @@ button:disabled:hover {
 .container .success {
   color: #075004;
   background-color: #1efa0a;
-  border: 1p solid #0b8f37;
+  border: 1px solid #0b8f37;
   padding: 5px;
   border-radius: 5px;
 }
 
 .quill {
-  box-sizing: border-box;
-  border: none;
-  padding: .8em 0;
-  background-color: transparent;  
-  height: 200px;
+  box-sizing: border-box;  
+  background-color: transparent;
+  .ql-toolbar {
+    border-bottom: 1px solid blueviolet;
+  }
+  .ql-container {
+    height: 200px;
+    font-family: "Montserrat", sans-serif;    
+  }  
 }
 
 .quill::placeholder {
   font-family: "Montserrat", sans-serif;
-  color: #AAA;
+  
 }
 
 .quill:focus {
   outline: none;
 }
+

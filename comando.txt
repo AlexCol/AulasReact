@@ -35,3 +35,5 @@ npm install --save-dev @types/react-cookie
 
 
 
+////quill
+npm install react-quill
