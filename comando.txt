@@ -34,6 +34,18 @@ npm install react-cookie
 npm install --save-dev @types/react-cookie
 
 
+//pra tornar o código feio de ler se aberto no browser
+npm uninstall uglify-js --save-dev
+npm uninstall npm-run-all --save-dev
+
+
 
 ////quill
 npm install react-quill
+
+
+
+/*
+tsrafce --pra criar o compomente com props
+rafce --sem props
+*/

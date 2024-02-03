@@ -1,16 +1,7 @@
 import { Timestamp, addDoc, collection } from "firebase/firestore";
 import { useEffect, useReducer, useState } from "react";
 import { db } from "../firebase/config";
-
-interface IDocument {
-    title: string,
-    image: string,
-    body: string,
-    tags: string[],
-    uid: string,
-    createdBt: string
-}
-
+import { IDocument } from "../Interfaces/IDocument";
 
 //+ 1 criando a interface a ser usada no reducer com o state;
 interface IInsertDocumentSate {

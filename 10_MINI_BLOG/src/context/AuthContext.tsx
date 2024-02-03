@@ -13,12 +13,11 @@ export function AuthProvider(
     //+realizar contagem de paginas abertas, se fechar todas, dar logout    
     //!metodo usando cookies
     useEffect(() => {
-        let numSessions = parseInt(Cookies.get('sessions') || '0', 10) + 1;
+      const numSessions = parseInt(Cookies.get('sessions') || '0', 10) + 1;
         Cookies.set('sessions', numSessions.toString());
-        console.log(numSessions);
-    
+
         const handleTabClose = () => {
-          let numSessions = parseInt(Cookies.get('sessions') || '0', 10) - 1;
+          const numSessions = parseInt(Cookies.get('sessions') || '0', 10) - 1;
           Cookies.set('sessions', numSessions.toString());
           console.log(numSessions);
           if (numSessions <= 0) {

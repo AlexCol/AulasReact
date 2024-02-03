@@ -48,7 +48,7 @@ function CreatePost() {
       body,
       tags: tagsArray,
       uid: (user?.uid) ? user?.uid : '',
-      createdBt: (user?.displayName) ? user?.displayName : ''
+      createdBy: (user?.displayName) ? user?.displayName : ''
     });
 
     // setTitle('');
