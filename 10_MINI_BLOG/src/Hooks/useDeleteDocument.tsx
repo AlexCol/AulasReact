@@ -1,31 +1,27 @@
-import { Timestamp, addDoc, collection } from "firebase/firestore";
 import { useEffect, useReducer, useState } from "react";
+import { deleteDoc, doc } from "firebase/firestore";
 import { db } from "../firebase/config";
-import { IDocument } from "../Interfaces/IDocument";
 
-//+ 1 criando a interface a ser usada no reducer com o state;
-interface IInsertDocumentSate {
+interface IDeletedDocumentSate {
     loading:boolean,
     error: string
 };
 
-const initialState: IInsertDocumentSate = {
+const initialState: IDeletedDocumentSate = {
     loading: false,
     error: ''
 }
 
-//+ 2 criando a ação, definindo valores a serem escolhidos
-interface IInsertAction { 
+interface IDeleteAction { 
     type: string;
     payload?: string;
 };
 
-//+ 4 criando a função 'reducer'
-function insertReducer(response: IInsertDocumentSate, action: IInsertAction)  {    
+function deleteReducer(response: IDeletedDocumentSate, action: IDeleteAction)  {    
     switch (action.type) {
         case 'LOADING':
             return {loading: true, error: ''};
-        case 'INSERTED_DOC':
+        case 'DELETED_DOC':
             return {loading: false, error: ''};
         case 'ERROR':
             return {loading: false, error: 'action.payload'};
@@ -34,31 +30,28 @@ function insertReducer(response: IInsertDocumentSate, action: IInsertAction)  {
     }
 }
 
-export const useInsertDocument = (docCollection: string) => {
-    const [response, dispatch] = useReducer(insertReducer, initialState);
+export const useDeleteDocument = (docCollection: string) => {
+    
 
-
+    const [response, dispatch] = useReducer(deleteReducer, initialState);
+    
     // deal with memory leak
     const [cancelled, setCancelled] = useState<boolean>(false);
-    const checkCancelBeforeDispatch = (action: IInsertAction) => {
+    const checkCancelBeforeDispatch = (action: IDeleteAction) => {
         if (!cancelled) dispatch(action);
     }
-
-    const insertDocument = async(document:IDocument) => {        
+    
+    const deleteDocument = async (id:string|undefined) => {
+        if (!id) return;
         checkCancelBeforeDispatch({
             type: "LOADING"
         })
+
         try {
-            const newDocument = {
-                ...document, createdAt: Timestamp.now()
-            }
-            await addDoc(
-                collection(db, docCollection),
-                newDocument
-            );
+            await deleteDoc(doc(db, docCollection, id));
             
             checkCancelBeforeDispatch({
-                type: "INSERTED_DOC"
+                type: "DELETED_DOC"
             })
         } catch (error:any) {
             let errorMessage:string = error.message;
@@ -69,6 +62,7 @@ export const useInsertDocument = (docCollection: string) => {
         }
     }
 
+    
     useEffect(() => {
         setCancelled(false);
         return () => {
@@ -77,6 +71,6 @@ export const useInsertDocument = (docCollection: string) => {
     }, []);
     
     return {
-        insertDocument, response
+        deleteDocument, response
     }
 }

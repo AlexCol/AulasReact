@@ -1,0 +1,30 @@
+.NoContent {
+    margin: 0;
+    padding: 0;
+}
+
+.NoContent .Menu {
+    padding: 1em 2em;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    background-color: blueviolet;
+    color: beige;    
+}
+
+.NoContent .Menu .MainDetail{
+    width: 10%;
+    margin: 1em 2em;    
+}
+
+.NoContent .Menu details{
+    margin: 1em 2em;    
+}
+
+.NoContent .Menu li {
+    margin-top: 1em;
+}
+
+.NoContent .Menu li a {
+    color: black;
+}

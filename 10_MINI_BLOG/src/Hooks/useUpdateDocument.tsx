@@ -1,31 +1,31 @@
-import { Timestamp, addDoc, collection } from "firebase/firestore";
+import { doc, updateDoc } from "firebase/firestore";
 import { useEffect, useReducer, useState } from "react";
 import { db } from "../firebase/config";
 import { IDocument } from "../Interfaces/IDocument";
 
 //+ 1 criando a interface a ser usada no reducer com o state;
-interface IInsertDocumentSate {
+interface IUpdateDocumentSate {
     loading:boolean,
     error: string
 };
 
-const initialState: IInsertDocumentSate = {
+const initialState: IUpdateDocumentSate = {
     loading: false,
     error: ''
 }
 
 //+ 2 criando a ação, definindo valores a serem escolhidos
-interface IInsertAction { 
+interface IUpdateAction { 
     type: string;
     payload?: string;
 };
 
 //+ 4 criando a função 'reducer'
-function insertReducer(response: IInsertDocumentSate, action: IInsertAction)  {    
+function updateReducer(response: IUpdateDocumentSate, action: IUpdateAction)  {    
     switch (action.type) {
         case 'LOADING':
             return {loading: true, error: ''};
-        case 'INSERTED_DOC':
+        case 'UPDATED_DOC':
             return {loading: false, error: ''};
         case 'ERROR':
             return {loading: false, error: 'action.payload'};
@@ -34,31 +34,36 @@ function insertReducer(response: IInsertDocumentSate, action: IInsertAction)  {
     }
 }
 
-export const useInsertDocument = (docCollection: string) => {
-    const [response, dispatch] = useReducer(insertReducer, initialState);
+export const useUpdateDocument = (docCollection: string) => {
+    
+
+    const [response, dispatch] = useReducer(updateReducer, initialState);
 
 
     // deal with memory leak
     const [cancelled, setCancelled] = useState<boolean>(false);
-    const checkCancelBeforeDispatch = (action: IInsertAction) => {
+    const checkCancelBeforeDispatch = (action: IUpdateAction) => {
         if (!cancelled) dispatch(action);
     }
 
-    const insertDocument = async(document:IDocument) => {        
+    const updateDocument = async(document:IDocument) => {
+        if(!document.id) return;
+
         checkCancelBeforeDispatch({
             type: "LOADING"
         })
         try {
-            const newDocument = {
-                ...document, createdAt: Timestamp.now()
+            const toUpdate = {
+                title: document.title,
+                body: document.body,
+                image: document.image,
+                tags: document.tags                
             }
-            await addDoc(
-                collection(db, docCollection),
-                newDocument
-            );
+            const docRef = await doc(db, docCollection, document.id);
+            await updateDoc(docRef, toUpdate);
             
             checkCancelBeforeDispatch({
-                type: "INSERTED_DOC"
+                type: "UPDATED_DOC"
             })
         } catch (error:any) {
             let errorMessage:string = error.message;
@@ -77,6 +82,6 @@ export const useInsertDocument = (docCollection: string) => {
     }, []);
     
     return {
-        insertDocument, response
+        updateDocument, response
     }
 }

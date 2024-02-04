@@ -11,7 +11,7 @@ function CreatePost() {
   const [title, setTitle] = useState<string>('');
   const [image, setImage] = useState<string>('');
   const [body, setBody] = useState<string>('');
-  const [tags, setTags] = useState<string>();
+  const [tags, setTags] = useState<string>('');
   const [postError, setPostError] = useState<string>('');
   const [formError, setFormError] = useState<string>('');
   const {insertDocument, response} = useInsertDocument("posts");
