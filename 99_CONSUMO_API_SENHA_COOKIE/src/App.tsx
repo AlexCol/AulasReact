@@ -5,8 +5,9 @@ function App() {
 
   const Connect = () => {
     const api = axios.create({
-      baseURL: "https://localhost:5000"
-    });  
+      baseURL: "https://localhost:5000",
+      timeout: 1000
+    });
 
     console.log("oi");
     const buscaToken = async() => {      
