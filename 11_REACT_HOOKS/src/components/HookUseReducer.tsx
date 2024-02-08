@@ -4,7 +4,7 @@ function HookUseReducer() {
     const inputRef = useRef<HTMLInputElement>(null); // Referência para o input
 
     // 3 useReducer
-    const [number, dispatch] = useReducer((state?: number, action?: string) : number => {
+    const [number, dispatch] = useReducer(() : number => {
         return Math.random();
     }, 0);
 
