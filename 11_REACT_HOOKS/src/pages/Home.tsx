@@ -8,6 +8,7 @@ import HookUseCallback from "../components/HookUseCallback";
 import HookUseMemo from "../components/HookUseMemo";
 import HookUseLayout from "../components/HookUseLayout";
 import HookUseImperativeHandle from "../components/HookUseImperativeHandle";
+import HookCustom from "../components/HookCustom";
 
 function Home() {
   const {logado, alterarStatus} = useContext(SomeContext);
@@ -26,6 +27,7 @@ function Home() {
       <HookUseMemo />
       <HookUseLayout />
 	  <HookUseImperativeHandle />
+	  <HookCustom />
     </div>
   )
 }
