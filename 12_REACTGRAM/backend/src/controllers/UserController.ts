@@ -120,3 +120,13 @@ export const update = async (req: Request, res: Response) => {
 
 	return res.status(200).json(user);
 }
+
+export const getUserById = async (req: Request, res: Response) => {	
+	const {id} = req.params;
+
+	if (!mongoose.isValidObjectId(id)) return res.status(404).send("Invalid Id.");
+
+	const user = await UserModel.findById(id).select("-password");
+	if (!user) return res.status(404).send("User not finded.");
+	return res.status(200).send(user);
+}
