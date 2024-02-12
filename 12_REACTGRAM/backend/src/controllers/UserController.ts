@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import bcrypt from 'bcryptjs';
 import { UserModel } from "../models/UserModel";
-import { Types } from "mongoose";
+import mongoose, { Types } from "mongoose";
 
 const generateToken = (id: Types.ObjectId) => {
 	const jwtSecret:string = process.env.JWT_SECRET || '';
@@ -83,6 +83,40 @@ export const login = async (req: Request, res: Response) => {
 }
 
 export const getCurrentUser = async (req: Request, res: Response) => {
-	const user = req.body;
+	const user = req.user;
 	res.status(200).json(user);
+}
+
+export const update = async (req: Request, res: Response) => {
+	const {name, password, bio} = req.body;
+
+	let profileImage:string = '';
+
+	if(req.file) {
+		profileImage = req.file.filename
+	}
+
+	const reqUser = req.user;
+	const user = await UserModel.findById(reqUser._id).select("-password");
+	//console.log(user?.password);
+
+	if(!user) return res.status(404).send("usuário não encontrado.");
+
+	if(name) {
+		user.name = name;
+	}
+	if(password) {
+		const salt = await bcrypt.genSalt();
+		const passwordHash = await bcrypt.hash(password, salt);
+		user.password = passwordHash;
+	}
+	if(profileImage) {
+		user.profileImage = profileImage;
+	}
+	if(bio) {
+		user.bio = bio;
+	}
+	await user.save();
+
+	return res.status(200).json(user);
 }

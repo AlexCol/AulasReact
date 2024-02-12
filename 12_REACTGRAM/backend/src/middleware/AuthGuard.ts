@@ -15,7 +15,8 @@ export const authGuard = async (req: Request, res: Response, next: NextFunction)
 		const verified = jwt.verify(token, jwtSecret); //+valida o token, se não achar, joga no catch
 		if (typeof verified === "string") return res.status(401).json({errors: "Token invalido."});
 		
-		req.body = await UserModel.findById(verified.id).select("-password"); //+tenta buscar o usuário, se não achar, joga no catch
+		//+para aceitar isso, criado arquivo 'custom.d.ts' e informado ele no arquivo 'tsconfig.json'
+		req.user = await UserModel.findById(verified.id).select("-password"); //+tenta buscar o usuário, se não achar, joga no catch
 		next();
 	} catch (error) {
 		return res.status(401).json({errors: "Token invalido."});
