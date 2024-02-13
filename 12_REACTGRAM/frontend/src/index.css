@@ -1,3 +1,4 @@
+/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! html tags ! */
 body {
 	font-family: 'Roboto', sans-serif;
 	margin: 0;
@@ -5,4 +6,91 @@ body {
 	box-sizing: border-box;
 	background-color: purple;
 	color: white;
+}
+
+a {
+  color: beige;
+  text-decoration: none;
+}
+
+ul {
+  list-style: none;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+label span {
+  font-weight: bold;
+  margin-bottom: 0.5em;
+  color: blueviolet;
+  font-size: 0.7em;
+}
+
+input {
+  background-color: bisque;
+  color: black;
+  border: none;
+  border-radius: 2px;
+  padding: 10px 8px;
+  outline: none;
+  margin-bottom: 0.6em;
+}
+input::placeholder {
+  color: blueviolet;
+}
+input:disabled {
+  cursor: not-allowed;
+  background-color: black;
+}
+input:disabled::placeholder {
+  color: yellow;
+}
+
+/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! classes ! */
+.active {
+  font-weight: bold;
+}
+
+.cancel-btn {
+  background-color: #ccc;
+}
+
+.hide {
+  display: none;
+}
+
+/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! botoes: html tags e classes ! */
+.btn,
+button,
+input[type="submit"] {
+  background-color: white;
+  color: blueviolet;
+  border: 1px solid blueviolet;
+  border-radius: 4px;
+  padding: 10px 8px;
+  font-weight: bold;
+  cursor: pointer;
+  opacity: 0.8;
+  font-size: 1em;
+	transition: 0.5s;
+}
+.btn:hover,
+button:hover,
+input[type="submit"]:hover{
+  background-color: blueviolet;
+  color: white;
+	opacity: 1;
+  border: 1px solid white;
+}
+input[type="submit"] {
+  margin-top: 1em;
 }

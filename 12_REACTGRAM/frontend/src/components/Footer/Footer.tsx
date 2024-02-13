@@ -1,8 +1,8 @@
-//import styles from './Footer.module.css';
+import styles from './Footer.module.css';
 
 function Footer() {
 	return (
-		<footer id='footer'>
+		<footer id={styles.footer}>
 			<p>ReactGram &copy; 2024</p>
 		</footer>
 	)

@@ -4,6 +4,8 @@ npm install --save-dev @types/react-icons
 
 
 //redux
+npm install react-redux
+npm install --save-dev @types/react-redux
 npm install @reduxjs/toolkit
 
 //rotas

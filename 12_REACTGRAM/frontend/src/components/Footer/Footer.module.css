@@ -1,0 +1,14 @@
+#footer {
+	background-color: #121212;
+	height: 6em;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-top: 1px solid white;
+	
+	/*daqui pra baixo é pra manter o footer bem no fundo sempre*/
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}

@@ -10,6 +10,9 @@ import NotFoundPage from "../../pages/NotFoundPage"
 import NavBar from "../Navbar/Navbar"
 import Footer from "../Footer/Footer"
 
+//+CSS
+import styles from './AppRoutes.module.css';
+
 function AppRoutes() {
   return (
 		<>
@@ -17,20 +20,22 @@ function AppRoutes() {
 			<BrowserRouter>
 				{/* no caso de haver o browser routes, tudo que estiver dentro dele, mas fora do Routes, será exibido em todas as rotas dentro do browser E pode manipular links*/}
 				<NavBar />
-				<Routes>
-					{/* free routes */}
-					<Route path='/' element={<Home />}/>
+				<div className={styles.container}>
+					<Routes>
+						{/* free routes */}
+						<Route path='/' element={<Home />}/>
 
-					{/* all RestrictedRoute are by default bloqued, must specify if can be acceced while logged in ou loggedout*/}
-					{/* can only be acceced if logged out */}
-					<Route path='/login' element={<Login />}/>
-					<Route path='/register' element={<Register />}/>
+						{/* all RestrictedRoute are by default bloqued, must specify if can be acceced while logged in ou loggedout*/}
+						{/* can only be acceced if logged out */}
+						<Route path='/login' element={<Login />}/>
+						<Route path='/register' element={<Register />}/>
 
-					{/* can only be acceced if logged in */}
+						{/* can only be acceced if logged in */}
 
-					//+No content
-					<Route path='*' element={<NotFoundPage />}/>
-				</Routes>
+						//+No content
+						<Route path='*' element={<NotFoundPage />}/>
+					</Routes>
+				</div>
 				<Footer />
 			</BrowserRouter>
 		</>
