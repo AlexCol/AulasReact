@@ -1,0 +1,25 @@
+.browser {
+  color: red;
+  width: 500px;
+  height: 500px;
+  
+	animation: spin 5s linear infinite;	
+  transition: filter 1000ms;
+}
+
+.browser:hover {
+  filter: drop-shadow(0 0 2em rgba(0, 255, 255, 1));
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+
+
+/*<BiAperture className={styles.browser} />*/
