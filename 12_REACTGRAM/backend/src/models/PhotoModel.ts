@@ -2,7 +2,8 @@ import mongoose, { Schema } from "mongoose";
 
 const photoSchema = new Schema (
 	{
-		image: {type: String},
+		image: {type: String}, //pra salvar a imagem image no banco: {type: Buffer},
+		imageByte: {type: Buffer},
 		title: {type: String},
 		likes: {type: Array},
 		comments: {type: Array},

@@ -1,4 +1,4 @@
-import { Request } from "express";
+import { NextFunction, Request, Response } from "express";
 import multer from "multer";
 
 const imageStorage = multer.diskStorage({
@@ -19,7 +19,18 @@ const imageStorage = multer.diskStorage({
 });
 
 export const imageUpload = multer( {
-	storage: imageStorage,
+	storage: imageStorage, ///para salvar usando a metodologia acima, em uma pasta local
+	fileFilter(req, file, callback) {
+		if(!file.originalname.match(/\.(png|jpg)$/)) {
+			//upload only png and jpg files
+			callback(new Error("Por favor, envie apenas png ou jpg!"));
+		}
+		callback(null, true);
+	}
+})
+
+export const imageUploadBytes = multer( {
+	storage: multer.memoryStorage(), //para salvar na memoria, e ter acesso aos bytes da imagem
 	fileFilter(req, file, callback) {
 		if(!file.originalname.match(/\.(png|jpg)$/)) {
 			//upload only png and jpg files

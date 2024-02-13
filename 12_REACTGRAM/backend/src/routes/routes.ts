@@ -1,9 +1,11 @@
 import Router, { Request, Response } from 'express';
 import userRoutes from './UserRoutes';
 import multer from 'multer';
+import photosRoutes from './PhotoRoutes';
 const router = Router();
 
 router.use('/users', userRoutes);
+router.use('/photos', photosRoutes);
 
 // const storage = multer.memoryStorage();
 // const upload = multer({ storage: storage });
