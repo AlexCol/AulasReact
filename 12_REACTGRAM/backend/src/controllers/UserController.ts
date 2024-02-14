@@ -49,7 +49,7 @@ export const register = async (req: Request, res: Response) => {
 	})
 
 	if(!newUser) {
-		res.status(422).json({errors: "Houve um erro, tente novamente mais tarde."});
+		res.status(422).json({errors: ["Houve um erro, tente novamente mais tarde."]});
 		return;
 	}
 	
@@ -66,12 +66,12 @@ export const login = async (req: Request, res: Response) => {
 	const user = await UserModel.findOne({email});
 	
 	if(!user || !user.password) {
-		res.status(404).json({errors: errMessage});
+		res.status(404).json({errors: [errMessage]});
 		return;
 	}
 
 	if(!(await bcrypt.compare(password, user.password))) {
-		res.status(404).json({errors: errMessage});
+		res.status(404).json({errors: [errMessage]});
 		return;
 	}
 

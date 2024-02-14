@@ -8,6 +8,7 @@ import styles from './Auth.module.css';
 import { useDispatch, useSelector} from 'react-redux';
 import { IAuthSate, register, reset } from '../../slices/authSlice';
 import { AppDispatch, RootState } from '../../store';
+import Message from '../../components/Message/Message';
 
 function Register() {
 	const nameRef = useRef<HTMLInputElement>(null);
@@ -28,13 +29,13 @@ function Register() {
 			confirmPassword: confirmPasswordRef.current!.value
 		}
 
-		console.log(user);
 		dispatch(register(user));
+		//não precisa de nvigate, pois o controle das rotas, caso logado, ele vai jogar pra home automaticamente
 	}
 
 	useEffect(() => {
 		dispatch(reset());
-	}, [dispatch])
+	}, [dispatch]);
 
 	return (
 		<div id={styles.register}>
@@ -44,31 +45,39 @@ function Register() {
 				<input 
 					type="text" 
 					placeholder='Nome'
+					required
 					ref={nameRef}
 				/>
 				<input 
 					type="text" 
 					placeholder='E-mail'
+					required
 					ref={emailRef}
 				/>
 				<input 
 					type="password" 
 					placeholder='Senha'
+					required
 					ref={passwordRef}
 				/>
 				<input 
 					type="password" 
 					placeholder='Confirme a senha.'
+					required
 					ref={confirmPasswordRef}
 				/>
-				<input type="submit" value="Cadastrar"/>
+				<input 
+					type="submit" 
+					value={loading ? "Aguarde" : "Cadastrar"}
+					disabled= {loading}
+				/>
 			</form>
 			<p>
 				Já tem conta? <Link to='/login'>Clique aqui.</Link>
 			</p>
-			{error && typeof error === 'boolean' && <p>Houve um erro. Tente novamente mais tarde.</p>}
+			{error && typeof error === 'boolean' && <Message msg='Ocorreu um erro, tente novamente mais tarde.' type='error'/>}
 			{error && typeof error !== 'boolean' && error.map((error, index) => (
-				<p key={index}>{error}</p>
+				<Message key={index} msg={error} type='error' />
 			))}
 		</div>
 	)

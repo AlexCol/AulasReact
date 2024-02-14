@@ -9,7 +9,7 @@ export const insertPhoto = async (req: Request, res: Response) => {
 	
 	console.log(req.body);
 
-	if(!req.file) return res.status(404).send("Foto não enviada.");
+	if(!req.file) return res.status(404).send({errors: ["Foto não enviada."]});
 	const {title} = req.body;
 	const image = req.file.filename;
 
@@ -24,7 +24,7 @@ export const insertPhoto = async (req: Request, res: Response) => {
 	});
 
 	if(!newPhoto) {
-		res.status(422).json({erros: "Houve um erro no sistema, tente novamente mais tarde."});
+		res.status(422).json({errors: ["Houve um erro no sistema, tente novamente mais tarde."]});
 	}
 
 	res.status(201).json(newPhoto);
@@ -32,15 +32,15 @@ export const insertPhoto = async (req: Request, res: Response) => {
 
 export const deletePhoto = async (req: Request, res: Response) => {
 	const {id} = req.params;
-	if (!mongoose.isValidObjectId(id)) return res.status(404).send("Invalid Id.");
+	if (!mongoose.isValidObjectId(id)) return res.status(404).send({errors: ["Invalid Id."]});
 
 	const reqUser = req.user;
 
 	const photo = await PhotoModel.findById(id);
 
-	if (!photo) return res.status(404).send("Foto não encontrada.");
+	if (!photo) return res.status(404).send({errors: ["Foto não encontrada."]});
 
-	if (!reqUser._id.equals(photo.userId)) return res.status(404).send("Foto não é do seu usuário.");
+	if (!reqUser._id.equals(photo.userId)) return res.status(404).send({errors: ["Foto não é do seu usuário."]});
 
 	await PhotoModel.findByIdAndDelete(id);
 
@@ -55,7 +55,7 @@ export const getAllPhotos = async (req: Request, res: Response) => {
 
 export const getUserPhotos = async (req: Request, res: Response) => {
 	const {id} = req.params;
-	if (!mongoose.isValidObjectId(id)) return res.status(404).send("Invalid Id.");
+	if (!mongoose.isValidObjectId(id)) return res.status(404).send({errors: ["Invalid Id."]});
 
 	const photos = await PhotoModel.find({userId: id}).sort([["createdAte", -1]]).exec();
 	res.status(200).json(photos);
@@ -63,7 +63,7 @@ export const getUserPhotos = async (req: Request, res: Response) => {
 
 export const updatePhoto = async (req: Request, res: Response) => {
 	const {id} = req.params;
-	if (!mongoose.isValidObjectId(id)) return res.status(404).send("Invalid Id.");
+	if (!mongoose.isValidObjectId(id)) return res.status(404).send({errors: ["Invalid Id."]});
 	
 	const {title} = req.body;
 
@@ -71,8 +71,8 @@ export const updatePhoto = async (req: Request, res: Response) => {
 
 	const photo = await PhotoModel.findById(id);
 
-	if (!photo) return res.status(404).send("Foto não encontrada.");	
-	if (!reqUser._id.equals(photo.userId)) return res.status(404).send("Foto não é do seu usuário.");
+	if (!photo) return res.status(404).send({errors: ["Foto não encontrada."]});	
+	if (!reqUser._id.equals(photo.userId)) return res.status(404).send({errors: ["Foto não é do seu usuário."]});
 
 	if(title) {
 		photo.title = title;
@@ -85,25 +85,25 @@ export const updatePhoto = async (req: Request, res: Response) => {
 
 export const getPhotoById = async (req: Request, res: Response) => {
 	const {id} = req.params;
-	if (!mongoose.isValidObjectId(id)) return res.status(404).send("Invalid Id.");
+	if (!mongoose.isValidObjectId(id)) return res.status(404).send({errors: ["Invalid Id."]});
 
 	const photo = await PhotoModel.findById(id);
 
-	if (!photo) return res.status(404).send("Foto nao encontrada.");
+	if (!photo) return res.status(404).send({errors: ["Foto nao encontrada."]});
 
 	return res.status(200).json(photo);
 }
 
 export const likePhoto = async (req: Request, res: Response) => {
 	const {id} = req.params;
-	if (!mongoose.isValidObjectId(id)) return res.status(404).send("Invalid Id.");
+	if (!mongoose.isValidObjectId(id)) return res.status(404).send({errors: ["Invalid Id."]});
 	const reqUser = req.user;
 
 	const photo = await PhotoModel.findById(id);
 
-	if (!photo) return res.status(404).send("Foto nao encontrada.");
+	if (!photo) return res.status(404).send({errors: ["Foto nao encontrada."]});
 
-	if(photo.likes.includes(reqUser._id)) return res.status(422).send("Usuário já deu like nessa foto.");
+	if(photo.likes.includes(reqUser._id)) return res.status(422).send({errors: ["Usuário já deu like nessa foto."]});
 
 	photo.likes.push(reqUser._id);
 
@@ -118,14 +118,14 @@ export const likePhoto = async (req: Request, res: Response) => {
 
 export const commentPhoto = async (req: Request, res: Response) => {
 	const {id} = req.params;
-	if (!mongoose.isValidObjectId(id)) return res.status(404).send("Invalid Id.");
+	if (!mongoose.isValidObjectId(id)) return res.status(404).send({errors: ["Invalid Id."]});
 	const {comment} = req.body;
 
 	const user = await UserModel.findById(req.user._id);
-	if (!user) return res.status(404).send("Usuário nao encontrado.");
+	if (!user) return res.status(404).send({errors: ["Usuário nao encontrado."]});
 
 	const photo = await PhotoModel.findById(id);
-	if (!photo) return res.status(404).send("Foto nao encontrada.");
+	if (!photo) return res.status(404).send({errors: ["Foto nao encontrada."]});
 
 	const userComment = {
 		comment,
@@ -146,7 +146,7 @@ export const commentPhoto = async (req: Request, res: Response) => {
 export const seachPhotos = async (req: Request, res: Response) => {
 	const {query} = req.query; //vai pegar o valor de q na url; ex: localhosto:3000/api/photo?q=lalala vai ser pego 'lalala'
 
-	if(typeof query !== 'string') return res.status(404).send("Busca não informada.");
+	if(typeof query !== 'string') return res.status(404).send({errors: ["Busca não informada."]});
 	
 	const photos = await PhotoModel.find({title: new RegExp(query, "i")}).exec();
 
@@ -157,7 +157,7 @@ export const insertPhotoBytes = async (req: Request, res: Response) => {
 	
 	console.log(req.body);
 
-	if(!req.file) return res.status(404).send("Foto não enviada.");
+	if(!req.file) return res.status(404).send({errors: ["Foto não enviada."]});
 	const {title} = req.body;
 	const image = req.file.buffer;
 
@@ -172,7 +172,7 @@ export const insertPhotoBytes = async (req: Request, res: Response) => {
 	});
 
 	if(!newPhoto) {
-		res.status(422).json({erros: "Houve um erro no sistema, tente novamente mais tarde."});
+		res.status(422).json({errors: ["Houve um erro no sistema, tente novamente mais tarde."]});
 	}
 
 	res.set({

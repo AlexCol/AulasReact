@@ -94,3 +94,17 @@ input[type="submit"]:hover{
 input[type="submit"] {
   margin-top: 1em;
 }
+input[type="submit"]:disabled {
+  background-color: black;
+  color: blueviolet;
+  border: 1px solid blueviolet;
+  cursor: not-allowed;
+	opacity: 1;
+}
+input[type="submit"]:disabled:hover {
+	background-color: black;
+  color: blueviolet;
+  border: 1px solid blueviolet;
+  cursor: not-allowed;
+	opacity: 1;
+}
