@@ -3,7 +3,6 @@ import { RootState } from "../store";
 import { IAuthSate } from "../slices/authSlice";
 import { useEffect, useState } from "react";
 
-
 export const useAuth = () => {
 	const { authUser } = useSelector<RootState, IAuthSate>((state) => state.auth);
 

@@ -24,7 +24,7 @@ function Login() {
 	useEffect(() => {
 		dispatch(reset());
 	}, [dispatch]);
-	
+
 	return (
 		<div id={styles.login}>
 			<h2>ReactGram</h2>

@@ -84,7 +84,7 @@ export const authSlice = createSlice({
 			})
 			.addCase(register.rejected, (state, action) => {
 				state.loading = false;
-				state.error = action.payload ? JSON.parse(JSON.stringify(action.payload)).errors : '';
+				state.error = action.payload ? JSON.parse(JSON.stringify(action.payload)).errors : action.payload;
 				state.success = true;
 				state.authUser = null;
 			})
@@ -107,7 +107,7 @@ export const authSlice = createSlice({
 			})
 			.addCase(login.rejected, (state, action) => {
 				state.loading = false;
-				state.error = action.payload ? JSON.parse(JSON.stringify(action.payload)).errors : '';
+				state.error = action.payload ? JSON.parse(JSON.stringify(action.payload)).errors : action.payload;
 				state.success = true;
 				state.authUser = null;
 			})
