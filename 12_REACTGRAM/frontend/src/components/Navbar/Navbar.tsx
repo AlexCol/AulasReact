@@ -2,15 +2,16 @@ import styles from './Navbar.module.css';
 
 import { BsFillCameraFill, BsFillPersonFill, BsHouseDoorFill, BsSearch } from "react-icons/bs"
 import { Link, useNavigate } from "react-router-dom"
-import { useAuth } from '../../hooks/useAuth';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store';
 import { IAuthSate, logout, reset } from '../../slices/authSlice';
 import { NavLink } from 'react-router-dom';
 
+interface INavBarProps {
+	auth: boolean;
+}
 
-function NavBar() {
-	const {auth} = useAuth();
+function NavBar({auth}: INavBarProps) {
 	const { authUser }= useSelector<RootState, IAuthSate>((state) => state.auth);
 	const navigate = useNavigate();
 	const dispatch = useDispatch<AppDispatch>();
@@ -30,7 +31,7 @@ function NavBar() {
 
 				<form id={styles.search_form}>
 					<BsSearch />
-					<input type="text" placeholder="Pesquisar"/>
+					<input name='search' type="text" placeholder="Pesquisar"/>
 				</form>
 
 				<ul id={styles.nav_links}>

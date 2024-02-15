@@ -43,24 +43,30 @@ function Register() {
 			<p className={styles.substitle}>Cadastre-se para ver as fotos dos seus amigos.</p>
 			<form onSubmit={handleSubmit}>
 				<input 
+					name='name'
+					autoComplete='name'
 					type="text" 
 					placeholder='Nome'
 					required
 					ref={nameRef}
 				/>
 				<input 
+					name='email'
+					autoComplete='email'
 					type="text" 
 					placeholder='E-mail'
 					required
 					ref={emailRef}
 				/>
 				<input 
+					name='password'
 					type="password" 
 					placeholder='Senha'
 					required
 					ref={passwordRef}
 				/>
 				<input 
+					name='confirmPassword'
 					type="password" 
 					placeholder='Confirme a senha.'
 					required

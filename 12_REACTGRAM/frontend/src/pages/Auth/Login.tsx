@@ -29,20 +29,23 @@ function Login() {
 		<div id={styles.login}>
 			<h2>ReactGram</h2>
 			<p className={styles.subtitle}>Faça o login para vre o que há de novo!</p>
-			<form onSubmit={handleSubmit}>
+			<form name='a' onSubmit={handleSubmit}>
 				<input 
+					name='email'
+					autoComplete='email'
 					type="text" 
 					placeholder='E-mail'
 					required
 					ref={emailRef}
 				/>
 				<input 
+					name='password'
 					type="password" 
 					required
 					placeholder='Senha'
 					ref={passwordRef}
 				/>
-				<input 
+				<input
 					type="submit" 
 					value={loading ? "Aguarde" : "Entrar"}
 					disabled= {loading}

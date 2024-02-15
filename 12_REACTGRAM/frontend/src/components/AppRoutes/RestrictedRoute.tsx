@@ -1,16 +1,14 @@
 import { ReactNode } from "react"
 import { Navigate } from "react-router-dom";
-import { useAuth } from "../../hooks/useAuth";
 
 interface IRestrictedRouteProps {
     children: ReactNode,
+		auth: boolean,
 		canAccessLoggeIn?: boolean
     canAccessLoggedOut?: boolean
 }
 
-export const RestrictedRoute = ({children, canAccessLoggeIn = false, canAccessLoggedOut = false}: IRestrictedRouteProps) => {
-  const {auth} = useAuth();
-
+export const RestrictedRoute = ({children, auth, canAccessLoggeIn = false, canAccessLoggedOut = false}: IRestrictedRouteProps) => {
 	return (
 			<>
 			{auth

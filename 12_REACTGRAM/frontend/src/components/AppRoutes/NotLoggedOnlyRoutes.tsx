@@ -5,10 +5,12 @@ import Register from "../../pages/Auth/Register";
 
 
 
-export const NotLoggedOnlyRoutes = (
-    <>
-        {/* can only be acceced if logged out */}
-        <Route path="/login" element={<RestrictedRoute canAccessLoggedOut={true}><Login/></RestrictedRoute>}/>
-        <Route path="/register" element={<RestrictedRoute canAccessLoggedOut={true}><Register/></RestrictedRoute>}/>
-    </>
-)
+export const NotLoggedOnlyRoutes = (auth: boolean) => {
+	return (
+		<>
+			{/* can only be acceced if logged out */}
+			<Route path="/login" element={<RestrictedRoute auth= {auth} canAccessLoggedOut={true}><Login/></RestrictedRoute>}/>
+			<Route path="/register" element={<RestrictedRoute auth= {auth} canAccessLoggedOut={true}><Register/></RestrictedRoute>}/>
+		</>
+	);
+}
