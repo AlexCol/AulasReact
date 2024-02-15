@@ -2,10 +2,12 @@ import { configureStore } from "@reduxjs/toolkit";
 
 //como ele foi exportado como default, pode-se colocar qualquer nome fora de chaves, que o sistema vai reconhecer como o item exportado como 'default'
 import authReducer from './slices/authSlice';
+import useReducer from './slices/userSlice';
 
 export const store = configureStore( {
 	reducer: {
-		auth: authReducer
+		auth: authReducer,
+		user: useReducer
 	}
 })
 

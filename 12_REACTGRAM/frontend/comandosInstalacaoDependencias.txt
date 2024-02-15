@@ -20,3 +20,12 @@ npm install --save-dev @types/axios
 //pra manipulação de cookies
 npm install js-cookie
 npm install --save-dev @types/js-cookie
+
+
+
+///
+dicas pra novos slices:
+--criar a interface pro state, e um state incial;
+--criar o slice, usando o createslice com seu reducer (normalmente pra reset);
+--exportar o reset separadamente, e as actions como default;
+--colocar ele na store
