@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useState } from 'react';
+import { FormEvent, useEffect, useRef, useState } from 'react';
 import styles from './EditProfile.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store';
@@ -6,19 +6,28 @@ import Message from '../../components/Message/Message';
 import { IUserSate, profile } from '../../slices/userSlice';
 
 function EditProfile() {	
-	const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const nameRef = useRef<HTMLInputElement>(null);
+	const emailRef = useRef<HTMLInputElement>(null);
+	const passwordRef = useRef<HTMLInputElement>(null);
+	const bioRef = useRef<HTMLInputElement>(null);
   const [profileImage, setProfileImage] = useState("");
-  const [bio, setBio] = useState("");
   const [previewImage, setPreviewImage] = useState("");
 
 	const { user, loading, error, message } = useSelector<RootState, IUserSate>((state) => state.user);
 	const dispatch = useDispatch<AppDispatch>();
-	
+
+
 	useEffect(() => {
-		console.log('oi');
-		dispatch(profile());		
+		if(user) {
+			if(nameRef.current) nameRef.current.value = user.name;
+			if(emailRef.current) emailRef.current.value = user.email;
+			if(bioRef.current) bioRef.current.value = user.bio || '';
+		}
+	}, [user])
+	
+
+	useEffect(() => {
+		dispatch(profile());
 	}, [dispatch]);
 
 	function handleSubmit(e: FormEvent<HTMLFormElement>) {
@@ -34,16 +43,21 @@ function EditProfile() {
 			{/* preview da imagem */}
 
 			<form onSubmit={handleSubmit}>
-			<input name='email' autoComplete='none' type="email" placeholder="E-mail" disabled value={email || ""} />
-			<input
-          name='name'
-					autoComplete='name'
-					type="text"
-					required
-          placeholder="Nome"
-          onChange={(e) => setName(e.target.value)}
-          value={name || ""}
-        />				
+				<label htmlFor="email">
+					<span>E-Mail:</span>
+					<input name='email' autoComplete='none' type="email" placeholder="E-mail" disabled ref={emailRef} />
+				</label>
+				<label htmlFor="name">
+					<span>Name:</span>
+					<input
+						name='name'
+						autoComplete='name'
+						type="text"
+						required
+						placeholder="Nome"
+						ref={nameRef}
+					/>
+				</label>
 				<label>
           <span>Imagem de Perfil:</span>
           <input type="file" />
@@ -54,8 +68,7 @@ function EditProfile() {
             name="bio"
 						type="text"
             placeholder="Descrição do perfil"
-            onChange={(e) => setBio(e.target.value)}
-            value={bio || ""}
+						ref={bioRef}
           />
         </label>
         <label>
@@ -64,8 +77,7 @@ function EditProfile() {
             name="password"
 						type="password"
             placeholder="Digite sua nova senha..."
-            onChange={(e) => setPassword(e.target.value)}
-            value={password || ""}
+						ref={passwordRef}
           />
         </label>
 				<input

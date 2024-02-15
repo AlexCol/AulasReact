@@ -49,7 +49,8 @@ input::placeholder {
 }
 input:disabled {
   cursor: not-allowed;
-  background-color: black;
+	color: blueviolet;
+  background-color: beige;
 }
 input:disabled::placeholder {
   color: yellow;
