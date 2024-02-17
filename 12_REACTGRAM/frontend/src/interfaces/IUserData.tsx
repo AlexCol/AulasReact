@@ -2,6 +2,6 @@ export interface IUserData {
 	_id: string,
 	name: string,
 	email: string,
-	imageProfile?: string,
+	profileImage?: string,
 	bio?: string
 }

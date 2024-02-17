@@ -16,6 +16,6 @@ userRoutes.get("/profile", authGuard, getCurrentUser);
 userRoutes.get('/:id', authGuard, getUserById);
 userRoutes.post("/register", userCreateValidation(), validate, register);
 userRoutes.post("/login", loginValidation(), validate, login);
-userRoutes.put('/', authGuard, userUpdateValidation(), validate, imageUpload.single("profileImage"), update);//devido a image, os dados devem ser enviados em form-data
+userRoutes.put('/', authGuard, imageUpload.single("profileImage"), userUpdateValidation(), validate, update);//devido a image, os dados devem ser enviados em form-data
 
 export default userRoutes;

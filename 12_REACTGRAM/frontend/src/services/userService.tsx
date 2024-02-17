@@ -9,19 +9,39 @@ export const profile = async (token:string) => {
 			return res.data;
 		})
 		.catch((error) => {
-			if (error.response && error.response.data) {
-				const errorMessage = error.response.data;
-				return { errorMessage };
-			} else {
-				console.log(error.message); // Caso não haja uma resposta de erro definida
-				return { errorMessage: error.message };
-			}
+			return handleError(error);
 		});
 		return response;
 	};
 
+	export const updateProfile = async (data: any, token:string) => {
+		const response = await api.put('/users', data, {headers: {Authorization: `Beared ${token}`}})
+			.then((res) => {
+				if(!res.data) {
+					throw new Error("Empty Data");
+				}
+				return res.data;
+			})
+			.catch((error) => {
+				return handleError(error);
+			});
+			return response;
+		};	
+
 	const userService = {
-		profile
+		profile, updateProfile
 	};
 	
 	export default userService;
+
+
+
+	function handleError(error: any) {
+		if (error.response && error.response.data) {
+			const errorMessage = error.response.data;
+			return { errorMessage };
+		} else {
+			console.log(error.message); // Caso não haja uma resposta de erro definida
+			return { errorMessage: error.message };
+		}
+	}

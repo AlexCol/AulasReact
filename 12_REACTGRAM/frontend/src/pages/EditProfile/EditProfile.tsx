@@ -1,21 +1,20 @@
-import { FormEvent, useEffect, useRef, useState } from 'react';
+import { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react';
 import styles from './EditProfile.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store';
 import Message from '../../components/Message/Message';
-import { IUserSate, profile } from '../../slices/userSlice';
+import { IUserSate, profile, resetMessage, updateProfile } from '../../slices/userSlice';
+import { uploads } from '../../utils/config';
 
 function EditProfile() {	
   const nameRef = useRef<HTMLInputElement>(null);
 	const emailRef = useRef<HTMLInputElement>(null);
 	const passwordRef = useRef<HTMLInputElement>(null);
 	const bioRef = useRef<HTMLInputElement>(null);
-  const [profileImage, setProfileImage] = useState("");
-  const [previewImage, setPreviewImage] = useState("");
+  const [previewImage, setPreviewImage] = useState<File|null>(null);
 
 	const { user, loading, error, message } = useSelector<RootState, IUserSate>((state) => state.user);
 	const dispatch = useDispatch<AppDispatch>();
-
 
 	useEffect(() => {
 		if(user) {
@@ -30,9 +29,51 @@ function EditProfile() {
 		dispatch(profile());
 	}, [dispatch]);
 
-	function handleSubmit(e: FormEvent<HTMLFormElement>) {
+	async function handleSubmit(e: FormEvent<HTMLFormElement>) {
 		e.preventDefault();
 
+		const userData:any = {
+			name: nameRef.current!.value,
+			password: passwordRef.current!.value,
+			bio: bioRef.current!.value,
+			profileImage: previewImage
+		}
+
+		//build form-data
+		const formData = new FormData();
+		Object.keys(userData).forEach((key) => {
+			if (userData[key]) {
+				formData.append(key, userData[key]);		
+			}
+		});
+		await dispatch(updateProfile(formData));
+		setTimeout(() => {
+			dispatch(resetMessage());
+		}, 2000);
+	}
+
+	function handleFile(e: ChangeEvent<HTMLInputElement>) {
+		e.preventDefault();
+		if(!e.target.files) return;
+
+		const image = e.target.files[0];
+		setPreviewImage(image);		
+		
+		//!para leitura de bytes pelo file input
+		// const file = e.target.files[0];
+		// const reader = new FileReader();
+		// reader.onload = (e) => {
+    //   if(!e.target) return;
+		// 	console.log('bah')
+		// 	const arrayBuffer = e.target.result as ArrayBuffer;
+    //   const bytes = new Uint8Array(arrayBuffer);
+		// 	setPreviewImage(bytes);
+    // };
+		// reader.readAsArrayBuffer(file);
+		//!depois pra uso no html
+		// {previewImage && (
+		// 	<img src={`data:image/jpeg;base64,${btoa(String.fromCharCode(...previewImage))}`} alt="Imagem" />
+		// )}
 	}
 
 	return (
@@ -40,17 +81,23 @@ function EditProfile() {
 			<h2>Edite seus dados.</h2>
 			<p className={styles.subtitle}>Adicione uma imagem de perfil e conte mais sobre você...</p>
 
-			{/* preview da imagem */}
-
+			{(user && (user.profileImage || previewImage)) && (
+				<img className={styles.profile_image} src={
+					previewImage ?
+						URL.createObjectURL(previewImage)
+						:
+						`${uploads}/users/${user.profileImage}`
+				} alt="profileImage" />
+			)}
 			<form onSubmit={handleSubmit}>
 				<label htmlFor="email">
 					<span>E-Mail:</span>
-					<input name='email' autoComplete='none' type="email" placeholder="E-mail" disabled ref={emailRef} />
+					<input id='email' autoComplete='none' type="email" placeholder="E-mail" disabled ref={emailRef} />
 				</label>
 				<label htmlFor="name">
 					<span>Name:</span>
 					<input
-						name='name'
+						id='name'
 						autoComplete='name'
 						type="text"
 						required
@@ -60,12 +107,13 @@ function EditProfile() {
 				</label>
 				<label>
           <span>Imagem de Perfil:</span>
-          <input type="file" />
+          <input type="file" onChange={handleFile}/>
+
         </label>
-        <label>
+        <label htmlFor='bio'>
           <span>Bio:</span>
           <input
-            name="bio"
+            id="bio"
 						type="text"
             placeholder="Descrição do perfil"
 						ref={bioRef}
@@ -89,9 +137,9 @@ function EditProfile() {
 				{error && typeof error !== 'boolean' && error.map((error, index) => (
 					<Message key={index} msg={error} type='error' />
 				))}			
-        {/*
+        {
 				message && <Message msg={message} type="success" />
-				*/}
+				}
 			</form>
 		</div>
 	)

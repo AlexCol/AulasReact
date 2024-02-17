@@ -5,3 +5,6 @@ export const api = axios.create({
 });
 
 export const localStorageAuthName = 'authUser';
+
+
+export const uploads = "http://localhost:4500/uploads";

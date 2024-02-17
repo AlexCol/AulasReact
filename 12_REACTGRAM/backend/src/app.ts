@@ -18,7 +18,7 @@ app.use(cors({
 	origin: "http://localhost:3000"
 }));
 
-//!definindo diretorio de uploads
+//!definindo diretorio de uploads(criando o controller pra recuperar as fotos)
 app.use('/uploads', express.static(path.join(__dirname, "/uploads")));
 
 //!DB connection

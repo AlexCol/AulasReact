@@ -37,6 +37,21 @@ export const profile = createAsyncThunk(
   }
 );
 
+export const updateProfile = createAsyncThunk(
+  "user/updateProfile",
+  async (user:any, thunkAPI:any) => {
+    const rootState = thunkAPI.getState() as RootState;
+		const token = rootState.auth.authUser?.token;
+		if(!token)
+			return thunkAPI.rejectWithValue({errorMessage: "Sem token"});
+		
+		const data = await userService.updateProfile(user, token);
+		if ("errorMessage" in data) {
+			return thunkAPI.rejectWithValue(data.errorMessage);
+		}
+    return data;
+  }
+);
 
 //!slicer
 export const userSlice = createSlice({
@@ -47,6 +62,7 @@ export const userSlice = createSlice({
 			state.loading = false;
 			state.error = false;
 			state.success = false;
+			state.message = '';
 		}
 	},
   extraReducers: (builder) => {builder
@@ -59,6 +75,23 @@ export const userSlice = createSlice({
 			state.success = true;
 			state.error = false;
 			state.user = action.payload;
+		})
+		.addCase(updateProfile.pending, (state) => {
+			state.loading = true;
+			state.error = false;
+			state.success = false;
+		})
+		.addCase(updateProfile.fulfilled, (state, action) => {
+			state.loading = false;
+			state.error = false;
+			state.success = true;
+			state.user = action.payload;
+			state.message = 'Usuário atualizado com sucesso!'
+		})
+		.addCase(updateProfile.rejected, (state, action) => {
+			state.loading = false;
+			state.error = action.payload ? JSON.parse(JSON.stringify(action.payload)).errors : action.payload;
+			state.success = true;
 		})
 	}
 });
