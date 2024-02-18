@@ -53,6 +53,22 @@ export const updateProfile = createAsyncThunk(
   }
 );
 
+export const getUserDetails = createAsyncThunk(
+  "user/get",
+  async (id:string, thunkAPI:any) => {
+    const rootState = thunkAPI.getState() as RootState;
+		const token = rootState.auth.authUser?.token;
+		if(!token)
+			return thunkAPI.rejectWithValue({errorMessage: "Sem token"});
+		
+		const data = await userService.getUserDetails(id, token);
+		if ("errorMessage" in data) {
+			return thunkAPI.rejectWithValue(data.errorMessage);
+		}
+    return data;
+  }
+);
+
 //!slicer
 export const userSlice = createSlice({
 	name: "user",
@@ -93,6 +109,22 @@ export const userSlice = createSlice({
 			state.error = action.payload ? JSON.parse(JSON.stringify(action.payload)).errors : action.payload;
 			state.success = true;
 		})
+		.addCase(getUserDetails.pending, (state) => {
+			state.loading = true;
+			state.error = false;
+			state.success = false;
+		})
+		.addCase(getUserDetails.fulfilled, (state, action) => {
+			state.loading = false;
+			state.error = false;
+			state.success = true;
+			state.user = action.payload;
+		})
+		.addCase(getUserDetails.rejected, (state, action) => {
+			state.loading = false;
+			state.error = action.payload ? JSON.parse(JSON.stringify(action.payload)).errors : action.payload;
+			state.success = true;
+		})		
 	}
 });
 

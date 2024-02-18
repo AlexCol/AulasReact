@@ -1,5 +1,6 @@
 import { IAuthData } from "../interfaces/IAuthData";
 import { api, localStorageAuthName } from "../utils/config";
+import { handleError } from "./utils/handleError";
 
 export const register = async(data:any) => {
 	try {
@@ -39,13 +40,7 @@ export const login = async (data:any) => { //!usando no login metodo sem 'try ca
 			return logginData;
 		})
 		.catch((error) => {
-			if (error.response && error.response.data) {
-				const errorMessage = error.response.data;
-				return { errorMessage };
-			} else {
-				console.log(error.message); // Caso não haja uma resposta de erro definida
-				return { errorMessage: error.message };
-			}
+			return handleError(error);
 		});
 		return response;
 	};

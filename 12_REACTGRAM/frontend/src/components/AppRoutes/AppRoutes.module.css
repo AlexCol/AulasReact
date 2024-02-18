@@ -1,3 +1,5 @@
 .container {
 	min-height: 70vh;
+	background-color: purple;
+	border: 1px solid transparent;
 }
