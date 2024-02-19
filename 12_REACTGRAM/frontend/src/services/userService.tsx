@@ -1,7 +1,12 @@
 import { api } from "../utils/config";
 import { handleError } from "./utils/handleError";
 
-export const profile = async (token:string) => {
+//! *****************************************************************************************************************************************
+//? A mais enxuta está na 'photoSerice' onde tem melhor reaproveitamento e menos repetição
+//! *****************************************************************************************************************************************
+
+
+const profile = async (token:string) => {
 	const response = await api.get('/users/profile', {headers: {Authorization: `Beared ${token}`}})
 		.then((res) => {
 			if(!res.data) {
@@ -15,7 +20,7 @@ export const profile = async (token:string) => {
 		return response;
 };
 
-export const updateProfile = async (data: any, token:string) => {
+const updateProfile = async (data: any, token:string) => {
 	const response = await api.put('/users', data, {headers: {Authorization: `Beared ${token}`}})
 		.then((res) => {
 			if(!res.data) {
@@ -29,8 +34,8 @@ export const updateProfile = async (data: any, token:string) => {
 		return response;
 };
 
-export const getUserDetails = async (id: string, token:string) => {
-	const response = await api.put(`/users/${id}`, {headers: {Authorization: `Beared ${token}`}})
+const getUserDetails = async (id: string, token:string) => {
+	const response = await api.get(`/users/${id}`, {headers: {Authorization: `Beared ${token}`}})
 		.then((res) => {
 			if(!res.data) {
 				throw new Error("Empty Data");

@@ -6,9 +6,6 @@ import { PhotoModel } from '../models/PhotoModel';
 import { body } from 'express-validator';
 
 export const insertPhoto = async (req: Request, res: Response) => {
-	
-	console.log(req.body);
-
 	if(!req.file) return res.status(404).send({errors: ["Foto não enviada."]});
 	const {title} = req.body;
 	const image = req.file.filename;
@@ -154,9 +151,6 @@ export const seachPhotos = async (req: Request, res: Response) => {
 }
 
 export const insertPhotoBytes = async (req: Request, res: Response) => {
-	
-	console.log(req.body);
-
 	if(!req.file) return res.status(404).send({errors: ["Foto não enviada."]});
 	const {title} = req.body;
 	const image = req.file.buffer;

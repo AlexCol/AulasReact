@@ -107,7 +107,7 @@ export const userSlice = createSlice({
 		.addCase(updateProfile.rejected, (state, action) => {
 			state.loading = false;
 			state.error = action.payload ? JSON.parse(JSON.stringify(action.payload)).errors : action.payload;
-			state.success = true;
+			state.success = false;
 		})
 		.addCase(getUserDetails.pending, (state) => {
 			state.loading = true;

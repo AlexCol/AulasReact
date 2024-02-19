@@ -98,7 +98,6 @@ export const update = async (req: Request, res: Response) => {
 
 	const reqUser = req.user;
 	const user = await UserModel.findById(reqUser._id).select("-password");
-	//console.log(user?.password);
 
 	if(!user) return res.status(404).send("usuário não encontrado.");
 

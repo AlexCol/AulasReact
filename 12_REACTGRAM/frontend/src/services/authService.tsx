@@ -2,7 +2,11 @@ import { IAuthData } from "../interfaces/IAuthData";
 import { api, localStorageAuthName } from "../utils/config";
 import { handleError } from "./utils/handleError";
 
-export const register = async(data:any) => {
+//! *****************************************************************************************************************************************
+//? A mais enxuta está na 'photoSerice' onde tem melhor reaproveitamento e menos repetição
+//! *****************************************************************************************************************************************
+
+const register = async(data:any) => {
 	try {
 		const response = await api.post('/users/register', data);
 		const logginData:IAuthData = response.data;
@@ -23,11 +27,11 @@ export const register = async(data:any) => {
 	}
 }
 
-export const logout = () => {
+const logout = () => {
   localStorage.removeItem(localStorageAuthName);
 };
 
-export const login = async (data:any) => { //!usando no login metodo sem 'try catch' solto, e sim usando o do proprio axios
+const login = async (data:any) => { //!usando no login metodo sem 'try catch' solto, e sim usando o do proprio axios
 	const response = await api.post('/users/login', data)
 		.then((res) => {
 			const logginData:IAuthData = res.data;
