@@ -20,7 +20,6 @@ function InsertPhotoForm({loadingPhoto, messagePhoto, errorPhoto}: IPhotoInsert)
 	const [error, setError] = useState<string>('');
 
 	//!refs
-	const newPhotoForm = useRef<HTMLDivElement|null>(null);	
 	const titleRef = useRef<HTMLInputElement>(null);
 	const imageRef = useRef<HTMLInputElement>(null);
 
@@ -61,7 +60,7 @@ function InsertPhotoForm({loadingPhoto, messagePhoto, errorPhoto}: IPhotoInsert)
 	}
 	
 	return (
-		<div className={styles.new_photo} ref={newPhotoForm}>
+		<div className={styles.new_photo}>
 			<h3>Compartilhe algum momento seu:</h3>
 			<form onSubmit={submitHandle}>
 				<label htmlFor="tittle">

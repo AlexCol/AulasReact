@@ -13,10 +13,11 @@ interface IPhotosList {
 	photos: IPhotoData[],
 	photo?: IPhotoData|null,
 	searchedUserId: string
-	currentUserId: string
+	currentUserId: string,
+	setPhotoToEdit: Function
 }
 
-function PhotosList({photos, photo = null, searchedUserId, currentUserId} : IPhotosList) {
+function PhotosList({photos, photo = null, searchedUserId, currentUserId, setPhotoToEdit} : IPhotosList) {
 	const [error, setError] = useState<string>('');
 	const dispatch = useDispatch<AppDispatch>();
 
@@ -27,11 +28,12 @@ function PhotosList({photos, photo = null, searchedUserId, currentUserId} : IPho
 		}, 2000);
 	}
 	
-		//!handleDelete
-		async function handleDelete(id: string) {
-			dispatch(deletePhoto(id));
-			resetComponentMessage();
-		}
+	//!handleDelete
+	async function handleDelete(id: string) {
+		dispatch(deletePhoto(id));
+		resetComponentMessage();
+		setPhotoToEdit(null);
+	}
 
 	return (
 		<div className={styles.photos_container}>
@@ -49,7 +51,7 @@ function PhotosList({photos, photo = null, searchedUserId, currentUserId} : IPho
 						<Link to={`/photos/${photo?._id}`}>
 							<BsFillEyeFill />
 						</Link>
-						<BsPencilFill />
+						<BsPencilFill onClick={() => setPhotoToEdit(onePhoto)} />
 						<BsXLg onClick={() => (onePhoto?._id) ? handleDelete(onePhoto?._id) : setError("Foto não pôde ser excluida. Tente novamente mais tarde.")}/>
 					</div>
 				) : (

@@ -88,7 +88,6 @@ export const updatePhoto = createAsyncThunk(
   }
 );
 
-
 export const photoSlice = createSlice({
 	name: "photo",
 	initialState,
@@ -164,16 +163,14 @@ export const photoSlice = createSlice({
 		.addCase(updatePhoto.fulfilled, (state, action) => {
 			state.loading = false;
 			state.error = false;
-			state.success = true;			
-			
+			state.success = true;
 			state.photos.map((photo) => {
-				if(photo._id === action.payload.id) {
+				if(photo._id === action.payload._id) {
 					return photo.title = action.payload.title
 				}
 				return photo;
 			}),
-
-			state.message = action.payload.message;
+			state.message = 'Foto Atualizada.';
 		})
 		.addCase(updatePhoto.rejected, (state, action) => {
 			state.loading = false;

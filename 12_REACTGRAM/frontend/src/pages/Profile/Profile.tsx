@@ -3,17 +3,21 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { AppDispatch, RootState } from '../../store';
 import { IAuthSate } from '../../slices/authSlice';
-import { useEffect, } from 'react';
+import { useEffect, useState, } from 'react';
 import { IPhotoSate, getUserPhotos } from '../../slices/photoSlice';
 import { IUserSate, getUserDetails } from '../../slices/userSlice';
 import ProfileHeader from './profileComponents/ProfileHeader';
 import InsertPhotoForm from './profileComponents/InsertPhotoForm';
 import PhotosList from './profileComponents/PhotosList';
+import UpdatePhotoForm from './profileComponents/UpdatePhotoForm';
+import { IPhotoData } from '../../interfaces/IPhotoData';
 
 
 function Profile() {
 	const {id} = useParams();
 	const dispatch = useDispatch<AppDispatch>();
+
+	const [photoToEdit, setPhotoToEdit] = useState<IPhotoData|null>(null);
 	
 	//!use selectors
 	const { authUser } = useSelector<RootState, IAuthSate>((state) => state.auth);
@@ -35,9 +39,13 @@ function Profile() {
 			{authUser && id && <>
 				<ProfileHeader user={user} />
 				{id === authUser?._id && (
-					<InsertPhotoForm errorPhoto={errorPhoto} loadingPhoto={loadingPhoto} messagePhoto={messagePhoto}/>				
+					photoToEdit 
+					?
+					<UpdatePhotoForm photo={photoToEdit} errorPhoto={errorPhoto} messagePhoto={messagePhoto} setPhotoToEdit={setPhotoToEdit} />
+					:
+					<InsertPhotoForm errorPhoto={errorPhoto} loadingPhoto={loadingPhoto} messagePhoto={messagePhoto}/>
 				)}
-				<PhotosList photos={photos} photo={photo} currentUserId={authUser._id} searchedUserId={id}/>
+				<PhotosList photos={photos} photo={photo} currentUserId={authUser._id} searchedUserId={id} setPhotoToEdit={setPhotoToEdit}/>
 			</>}
 		</div>
 		
