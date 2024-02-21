@@ -45,7 +45,7 @@ function Profile() {
 					:
 					<InsertPhotoForm errorPhoto={errorPhoto} loadingPhoto={loadingPhoto} messagePhoto={messagePhoto}/>
 				)}
-				<PhotosList photos={photos} photo={photo} currentUserId={authUser._id} searchedUserId={id} setPhotoToEdit={setPhotoToEdit}/>
+				<PhotosList photos={photos} currentUserId={authUser._id} searchedUserId={id} setPhotoToEdit={setPhotoToEdit}/>
 			</>}
 		</div>
 		

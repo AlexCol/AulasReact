@@ -88,11 +88,76 @@ export const updatePhoto = createAsyncThunk(
   }
 );
 
+export const getPhoto = createAsyncThunk(
+  "photo/getphoto",
+  async (id: string, thunkAPI) => {
+    const rootState = thunkAPI.getState() as RootState;
+		const token = rootState.auth.authUser?.token;
+		if(!token)
+			return thunkAPI.rejectWithValue({errorMessage: "Sem token"});
+		
+		const data = await photoService.getPhoto(id, token);
+		if ("errorMessage" in data) {
+			return thunkAPI.rejectWithValue(data.errorMessage);
+		}
+    return data;
+  }
+);
+
+export const like = createAsyncThunk(
+  "photo/like",
+  async (id: string, thunkAPI) => {
+    const rootState = thunkAPI.getState() as RootState;
+		const token = rootState.auth.authUser?.token;
+		if(!token)
+			return thunkAPI.rejectWithValue({errorMessage: "Sem token"});
+		
+		//const data = await photoService.like(id, token);
+		const data = await photoService['like'](id, token);
+		if ("errorMessage" in data) {
+			return thunkAPI.rejectWithValue(data.errorMessage);
+		}
+    return data;
+  }
+);
+
+export const comment = createAsyncThunk(
+  "photo/comment",
+  async ({id, comment}: {id: string, comment:string}, thunkAPI) => {
+    const rootState = thunkAPI.getState() as RootState;
+		const token = rootState.auth.authUser?.token;
+		if(!token)
+			return thunkAPI.rejectWithValue({errorMessage: "Sem token"});
+
+		const data = await photoService.comment(id, {comment}, token);
+		if ("errorMessage" in data) {
+			return thunkAPI.rejectWithValue(data.errorMessage);
+		}
+    return data;
+  }
+);
+
+export const getPhotos = createAsyncThunk(
+  "photo/allphotos",
+  async (_: undefined, thunkAPI) => {
+    const rootState = thunkAPI.getState() as RootState;
+		const token = rootState.auth.authUser?.token;
+		if(!token)
+			return thunkAPI.rejectWithValue({errorMessage: "Sem token"});
+
+		const data = await photoService.getPhotos(token);
+		if ("errorMessage" in data) {
+			return thunkAPI.rejectWithValue(data.errorMessage);
+		}
+    return data;
+  }
+);
+
 export const photoSlice = createSlice({
 	name: "photo",
 	initialState,
 	reducers: {
-		resetPhotoMessage: (state) => {
+		resetMessage: (state) => {
 			state.loading = false;
 			state.error = false;
 			state.success = false;
@@ -177,10 +242,88 @@ export const photoSlice = createSlice({
 			state.error = action.payload ? JSON.parse(JSON.stringify(action.payload)).errors : action.payload;
 			state.success = false;
 			state.photo = null;
-		})	
+		})
+		.addCase(getPhoto.pending, (state) => {
+			state.loading = true;
+			state.error = false;
+			state.success = false;
+		})
+		.addCase(getPhoto.fulfilled, (state, action) => {
+			state.loading = false;
+			state.error = false;
+			state.success = true;
+			state.photo = action.payload;
+		})
+		.addCase(getPhoto.rejected, (state, action) => {
+			state.loading = false;
+			state.error = action.payload ? JSON.parse(JSON.stringify(action.payload)).errors : action.payload;
+			state.success = false;
+			state.photo = null;
+		})
+		.addCase(like.fulfilled, (state, action) => {
+			state.loading = false;
+			state.error = false;
+			state.success = true;
+			if(state.photo?.likes) {
+				state.photo.likes.push(action.payload.userId);
+			}
+			state.photos.map((photo) => {
+				if(photo._id === action.payload.photoId) {
+					if(photo?.likes)
+						photo.likes.push(action.payload.userId);
+				}
+				return photo;
+			});
+			state.message = 'Like realizado.';
+		})
+		.addCase(like.rejected, (state, action) => {
+			state.loading = false;
+			state.error = action.payload ? JSON.parse(JSON.stringify(action.payload)).errors : action.payload;
+			state.success = false;
+			state.photo = null;
+		})
+		.addCase(comment.fulfilled, (state, action) => {
+			state.loading = false;
+			state.error = false;
+			state.success = true;
+			if(state.photo?.comments) {
+				state.photo.comments.push(action.payload.comment);
+			}
+			state.photos.map((photo) => {
+				if(photo._id === action.payload.photoId) {
+					if(photo?.comments)
+						photo.comments.push(action.payload.comment);
+				}
+				return photo;
+			});
+			state.message = 'Like realizado.';
+		})
+		.addCase(comment.rejected, (state, action) => {
+			state.loading = false;
+			state.error = action.payload ? JSON.parse(JSON.stringify(action.payload)).errors : action.payload;
+			state.success = false;
+			state.photo = null;
+		})
+		.addCase(getPhotos.pending, (state) => {
+			state.loading = true;
+			state.error = false;
+			state.success = false;
+		})
+		.addCase(getPhotos.fulfilled, (state, action) => {
+			state.loading = false;
+			state.error = false;
+			state.success = true;
+			state.photos = action.payload;
+		})
+		.addCase(getPhotos.rejected, (state, action) => {
+			state.loading = false;
+			state.error = action.payload ? JSON.parse(JSON.stringify(action.payload)).errors : action.payload;
+			state.success = false;
+			state.photo = null;
+		})		
 	}
 });
 
-export const { resetPhotoMessage } = photoSlice.actions;
+export const { resetMessage } = photoSlice.actions;
 const photoReducer = photoSlice.reducer;
 export default photoReducer; //authReducer

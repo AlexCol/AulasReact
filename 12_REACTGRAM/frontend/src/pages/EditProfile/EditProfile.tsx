@@ -12,7 +12,6 @@ function EditProfile() {
 	const passwordRef = useRef<HTMLInputElement>(null);
 	const bioRef = useRef<HTMLInputElement>(null);
   const [previewImage, setPreviewImage] = useState<File|null>(null);
-
 	const { user, loading, error, message } = useSelector<RootState, IUserSate>((state) => state.user);
 	const dispatch = useDispatch<AppDispatch>();
 

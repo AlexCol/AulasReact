@@ -7,24 +7,23 @@ import { Link } from 'react-router-dom'
 import { useState } from 'react'
 import { AppDispatch } from '../../../store'
 import { useDispatch } from 'react-redux'
-import { deletePhoto, resetPhotoMessage } from '../../../slices/photoSlice'
+import { deletePhoto, resetMessage } from '../../../slices/photoSlice'
 
 interface IPhotosList {
 	photos: IPhotoData[],
-	photo?: IPhotoData|null,
 	searchedUserId: string
 	currentUserId: string,
 	setPhotoToEdit: Function
 }
 
-function PhotosList({photos, photo = null, searchedUserId, currentUserId, setPhotoToEdit} : IPhotosList) {
+function PhotosList({photos, searchedUserId, currentUserId, setPhotoToEdit} : IPhotosList) {
 	const [error, setError] = useState<string>('');
 	const dispatch = useDispatch<AppDispatch>();
 
 	//!reset function
 	function resetComponentMessage() {
 		setTimeout(() => {
-			dispatch(resetPhotoMessage());
+			dispatch(resetMessage());
 		}, 2000);
 	}
 	
@@ -48,7 +47,7 @@ function PhotosList({photos, photo = null, searchedUserId, currentUserId, setPho
 				)}
 				{searchedUserId === currentUserId ? (
 					<div className={styles.actions}>
-						<Link to={`/photos/${photo?._id}`}>
+						<Link to={`/photos/${onePhoto?._id}`}>
 							<BsFillEyeFill />
 						</Link>
 						<BsPencilFill onClick={() => setPhotoToEdit(onePhoto)} />

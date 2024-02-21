@@ -3,7 +3,7 @@ import { ChangeEvent, FormEvent, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../../store';
 import { IPhotoData } from '../../../interfaces/IPhotoData';
-import { publishPhoto, resetPhotoMessage } from '../../../slices/photoSlice';
+import { publishPhoto, resetMessage } from '../../../slices/photoSlice';
 import Message from '../../../components/Message/Message'
 
 interface IPhotoInsert {
@@ -47,7 +47,7 @@ function InsertPhotoForm({loadingPhoto, messagePhoto, errorPhoto}: IPhotoInsert)
 		if (imageRef.current) imageRef.current.value = '';
 		setNewPhoto(null);
 		setTimeout(() => {
-			dispatch(resetPhotoMessage());
+			dispatch(resetMessage());
 		}, 2000);
 	}
 	

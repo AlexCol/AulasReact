@@ -3,7 +3,7 @@ import Message from '../../../components/Message/Message'
 import { uploads } from '../../../utils/config'
 import { IPhotoData } from '../../../interfaces/IPhotoData'
 import { FormEvent, useEffect, useRef } from 'react'
-import { resetPhotoMessage, updatePhoto } from '../../../slices/photoSlice'
+import { resetMessage, updatePhoto } from '../../../slices/photoSlice'
 import { AppDispatch } from '../../../store'
 import { useDispatch } from 'react-redux'
 
@@ -28,7 +28,7 @@ function UpdatePhotoForm({photo, errorPhoto, messagePhoto, setPhotoToEdit} : IPh
     };
 		dispatch(updatePhoto(photoData));
 		setTimeout(() => {      
-			dispatch(resetPhotoMessage());			
+			dispatch(resetMessage());			
 			setPhotoToEdit(null);
     }, 2000);		
 	}
