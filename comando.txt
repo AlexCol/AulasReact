@@ -44,6 +44,10 @@ npm install react-quill
 npm install react-bootstrap bootstrap
 npm install --save-dev @types/react-bootstrap
 
+///react-icons
+npm install react-icons
+npm install --save-dev @types/react-icons
+
 
 
 npm uninstall react-bootstrap bootstrap
