@@ -34,6 +34,10 @@ const getPhotos = async (token:string) => {
 	return apiRequests('get', `/photos`, null, token);
 };
 
+const searchPhotos = async (search: string, token:string) => {
+	return apiRequests('get', `/photos/search?query=${search}`, null, token);
+};
+
 
 export const photoService = {
 	publishPhoto,
@@ -43,5 +47,6 @@ export const photoService = {
 	getPhoto,
 	like,
 	comment,
-	getPhotos
+	getPhotos,
+	searchPhotos
 }

@@ -4,6 +4,7 @@ import Home from "../../pages/Home/Home";
 import EditProfile from "../../pages/EditProfile/EditProfile";
 import Profile from "../../pages/Profile/Profile";
 import Photo from "../../pages/Photo/Photo";
+import Search from "../../pages/Search/Search";
 
 export const AuthRoutes = (auth: boolean) => {
 	return (
@@ -13,6 +14,7 @@ export const AuthRoutes = (auth: boolean) => {
 				<Route path="/profile" element={<RestrictedRoute auth= {auth} canAccessLoggeIn={true}><EditProfile/></RestrictedRoute>}/>
 				<Route path="/users/:id" element={<RestrictedRoute auth= {auth} canAccessLoggeIn={true}><Profile/></RestrictedRoute>}/>
 				<Route path="/photos/:id" element={<RestrictedRoute auth= {auth} canAccessLoggeIn={true}><Photo/></RestrictedRoute>}/>
+				<Route path="/search" element={<RestrictedRoute auth= {auth} canAccessLoggeIn={true}><Search/></RestrictedRoute>}/>
     </>
 	);
 }
