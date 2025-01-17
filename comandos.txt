@@ -1,0 +1,23 @@
+para criar
+npx create-react-app 01_usestate --template typescript
+ou
+//para criar na mesma pasta que se está
+npx create-react-app . --template typescript 
+
+ou
+
+npm create vite@latest
+ou
+npm init vite
+
+fold all
+Ctrl + K Ctrl + 0
+unfold all
+Ctrl + K Ctrl + J
+
+https://jsonplaceholder.typicode.com/
+
+Next:
+npx create-next-app .
+ou
+npx create-next-app@latest .
