@@ -2,6 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .btn-purple {
+    @apply bg-purple-500 font-bold py-2
+  }
+  .btn-purple:hover {
+    @apply bg-red-300 text-red-500
+  }
+  
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;

@@ -60,16 +60,40 @@ export default function Home() {
     xl:bg-yellow-500
   `;
 
+  const inputTailwindClass = `
+    bg-gray-300
+    text-gray-900
+    focus:bg-red-300 
+    focus:outline-none 
+    focus:ring-2
+    focus:ring-purple-300 
+    focus:ring-opacity-50
+    px-3 
+    py-1 
+    rounded-md
+  `;
+
+  const myCustomTailwindClass = `
+    btn-purple hover:btn-purple
+    ${buttonTailwindClass}
+  `;
+
   return (
     <div className={divTailwindClass}>
       <h1 className={h1TailwindClass}>Tudo são classes</h1>
       <button className={blueButtonTailwindClass} onClick={() => alert("Hello tailwind!")}>Botão</button>
       <button className={redButtonTailwindClass} onClick={() => alert("Hello tailwind!")}>Botão</button>
       <button className={greenButtonTailwindClass} onClick={() => alert("Hello tailwind!")}>Botão</button>
+      <button className={myCustomTailwindClass} onClick={() => alert("Hello tailwind!")}>Botão</button>
 
       <div className={multiSizeDivTailwindClass}>
-
       </div>
+
+      <input
+        className={inputTailwindClass}
+        type="text"
+        placeholder="Digite algo"
+      />
     </div >
   );
 }
