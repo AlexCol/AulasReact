@@ -96,6 +96,27 @@ export default function Home() {
           Im absolute to this div! And to force me inside this div, the outside div must be relative.
         </div>
       </div>
+
+      <div className="container mx-auto bg-red-400 hidden">
+        Estando como 'hidden' meu espaço não é mantido.
+      </div>
+      <div className="container mx-auto bg-red-400 invisible">
+        Estando como 'invisible' meu espaço é mantido.
+      </div>
+
+      <div className="container relative h-32">
+        <div className="bg-red-600 h-18 w-40 p-6 m-6 absolute z-10">Atras</div>
+        <div className="bg-red-300 h-20 w-40 p-6 absolute">Na frente</div>
+      </div>
+
+      <div className="container relative h-32">
+        <div className="bg-purple-300 h-20 w-20 p-2 m-2 absolute z-30">Pos1</div>
+        <div className="bg-purple-600 h-20 w-20 p-2 m-6 absolute z-10">Pos2</div>
+        <div className="bg-purple-900 h-20 w-20 p-2 m-10 absolute">Pos3</div>
+      </div>
+
+      <p className="m-20"></p>
     </>
+
   );
 }
