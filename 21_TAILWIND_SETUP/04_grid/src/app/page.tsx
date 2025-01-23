@@ -75,6 +75,26 @@ export default function Home() {
         <div className="bg-red-500">8</div>
         <div className="bg-blue-600">9</div>
       </div>
+
+      <div className="grid grid-cols-3 m-4 gap-1">
+        <div className="bg-purple-400">1</div>
+        <div className="bg-purple-600">2</div>
+        <div className="bg-purple-400">3</div>
+        <div className="bg-purple-600">4</div>
+        <div className="bg-purple-400">5</div>
+        <div className="bg-purple-600">6</div>
+        <div className="bg-purple-400">7</div>
+        <div className="bg-purple-600">8</div>
+        <div className="bg-purple-400">9</div>
+      </div>
+
+      <div className="grid grid-rows-2 grid-flow-col gap-6">
+        <div className="bg-green-400">1</div>
+        <div className="bg-green-600">2</div>
+        <div className="bg-green-400">3</div>
+        <div className="bg-green-600">4</div>
+        <div className="bg-green-400">5</div>
+      </div>
     </div>
   );
 }
