@@ -21,3 +21,5 @@ Next:
 npx create-next-app .
 ou
 npx create-next-app@latest .
+
+https://cdnjs.com/

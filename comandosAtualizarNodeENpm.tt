@@ -1,0 +1,9 @@
+nvm install node
+
+nvm use xxx (nova versão)
+
+nvm list (lista versões instaladas)
+
+nvm uninstall yyy (versão antiga)
+
+npm install -g npm (atualiza npm pra ultima versão)
