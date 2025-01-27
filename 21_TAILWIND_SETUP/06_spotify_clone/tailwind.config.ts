@@ -18,8 +18,8 @@ export default {
         'green-main': '#1ED760'
       },
       backgroundImage: theme => ({
-        'spotify-theme': "url('/public/imgs/bursts.svg')",
-        'spotify-theme-mobile': "url('/public/imgs/bursts-mobile.svg')",
+        'spotify-theme': "url('/imgs/bursts.svg')",
+        'spotify-theme-mobile': "url('/imgs/bursts-mobile.svg')",
       }),
       backgroundSize: {
         '175%': '175%',
