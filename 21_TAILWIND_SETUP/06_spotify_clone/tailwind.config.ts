@@ -10,7 +10,8 @@ export default {
     extend: {
       spacing: {
         '14': '3.5rem',
-        '125px': '125px'
+        '125px': '125px',
+        '132px': '132px'
       },
       colors: {
         'hoverspt': '#18D760',
