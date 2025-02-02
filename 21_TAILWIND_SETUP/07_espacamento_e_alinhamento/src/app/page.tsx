@@ -119,7 +119,6 @@ export default function Home() {
       </div>
 
       <p className="m-10">Padding</p>
-      {/* grid-cols-3 - divide a grid em 3 colunas */}
       <div className='bg-yellow-300 h-40 p-10 flex items-center justify-center'>
         <span className="bg-yellow-700 m-1 p-4">Padding</span>
         <span className="bg-yellow-800 m-1 px-4">Padding</span>
@@ -130,17 +129,53 @@ export default function Home() {
       <div className="bg-purple-300 h-20 flex items-center justify-center">
         <span className="
           bg-purple-950
+          hover:bg-purple-400
           font-bold
           py-2
           px-4
           rounded-lg
-          hover:bg-purple-400
-          hover:cursor-pointer
-          hover:shadow-sm
+          shadow-sm
+          shadow-black
           hover:shadow-purple-900
           transition
-          duration-500"
+          duration-500
+          hover:cursor-pointer"
         >Meu Botão</span>
+      </div>
+
+      <p className="m-10">Margim</p>
+      <div className="w-20 h-10 bg-green-900 text-center m-5">
+        Margim
+      </div>
+      <div className="w-40 h-10 bg-yellow-900 text-center mx-10 xy-4">
+        Margim X e Y
+      </div>
+      <div className="w-1/2 h-10 bg-blue-900 text-center mx-auto">
+        Margim Para centralizar
+      </div>
+      <div className="h-10 bg-red-900 text-center mt-10 ml-5 mb-8 mr-48">
+        Margim Left Top Rigth Bottom
+      </div>
+      <div className="bg-gray-300">
+        <div className="w-20 bg-purple-600 mx-auto mt-5 flex justify-center">
+          Oi
+        </div>
+      </div>
+
+      <p className="m-10">Largura</p>
+      <div className="bg-blue-700 font-bold p-4 mx-auto max-w-5xl">
+        Max Width
+      </div>
+      <div className="bg-blue-300 font-bold p-4 mx-auto w-32 min-w-96">
+        Min Width
+      </div>
+
+      <p className="m-10">Altura</p>
+      <div className="bg-purple-300 font-bold p-4 mx-auto h-96 max-h-40">
+        Max Height
+      </div>
+      <div className="bg-red-300 font-bold p-4 mx-auto h-24 min-h-40">
+        Min Height
       </div>
 
       <p className="m-20">.</p>
