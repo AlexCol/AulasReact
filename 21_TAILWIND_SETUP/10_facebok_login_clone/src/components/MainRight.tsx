@@ -47,8 +47,15 @@ function MainRight() {
           <input type="submit" value='Entrar' className={buttonTailwindClass} />
         </form>
         <div className='flex flex-col divide-y divide-gray-400 text-center mt-2 md:mt-0'>
+          {/*
+          Observação sobre o divide-y: ele adiciona a linha de divisão entre os elementos
+          filhos do contêiner. Quando alteramos a ordem com o Flexbox usando a propriedade
+          `order`, a linha de divisão aparece entre os elementos conforme a ordem visual,
+          não a ordem do DOM. No seu caso, a linha aparece entre a `div` com `order-1`
+          (que visualmente vem primeiro) e a `div` com `order-2`.
+        */}
           <div className='pb-4 order-2 md:order-1'>
-            <a href="" className='text-blue-600 hover:underline'>Esqueceu a senha?</a>
+            <a href="#" className='text-blue-600 hover:underline'>Esqueceu a senha?</a>
           </div>
           <div className='pb-6 pt-8 order-1 md:order-2'>
             <a href="" className='py-3 px-4 bg-main-green hover:bg-main-green-hover text-white text-md md:text-lg rounded md:rounded-md'>Criar nova conta</a>
@@ -56,7 +63,9 @@ function MainRight() {
         </div>
       </div>
       <div>
-
+        <div className='hidden md:block text-sm mt-5 text-center'>
+          <p><a href="#" className='font-bold'>Criar uma Página</a> para uma celebridade, banda ou empresa.</p>
+        </div>
       </div>
     </div>
   )
