@@ -8,3 +8,5 @@ para o intelissense da extensão funcionar em variaveis que não estejam direto 
 --
 
 procurar por classRegex nos settings
+
+https://tailwindcss.com/docs/editor-setup

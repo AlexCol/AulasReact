@@ -1,0 +1,47 @@
+@import "tailwindcss";
+
+@theme {
+  /*criado cores novas*/
+  --meu-azul: #0070f3;
+  --meu-roxo: #7928ca;
+  --meu-rosa: #ff007f;
+
+  /*sobrescrevendo laranja*/
+  --color-orange-500: #ffffff;
+}
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+/*dessa forma, com media, será pego conforme sistema operacional*/
+/* @media (prefers-color-scheme: dark) {
+  :root {
+    --background: var(--meu-azul);
+    --foreground: var(--meu-roxo);
+  }
+} */
+
+/*
+adicionando light e dark, conseguimos fazer a aplicação não depender
+do prefers-color-scheme
+*/
+
+@variant dark (&:where(.dark, .dark *));
+.dark {
+  --background: var(--meu-azul);
+  --foreground: var(--meu-roxo);
+}
+@variant light (&:where(.light, .light *));
+.light {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+/* caso queira no projeto todo, usar no 'html' e não somente no body */
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: Arial, Helvetica, sans-serif;
+}
